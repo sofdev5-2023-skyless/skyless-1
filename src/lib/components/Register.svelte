@@ -224,7 +224,7 @@
 				</div>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div class="modal-action">
-					<button type="submit" class="btn">Register</button>
+					<button type="submit" class="btn btn-primary">Register</button>
 					<label for="doctor" class="btn">Cancel</label>
 				</div>
 			</div>

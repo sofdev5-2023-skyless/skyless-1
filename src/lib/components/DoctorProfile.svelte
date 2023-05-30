@@ -148,7 +148,7 @@
 			<label class="label">Descripción:</label>
 			<textarea class="textarea" name="descripcion" rows="4" />
 		</div>
-		<button type="submit" class="btn2">Schedule</button>
+		<button type="submit" class="btn btn-primary">Schedule</button>
 	</form>
 </div>
 

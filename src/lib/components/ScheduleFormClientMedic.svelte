@@ -114,7 +114,7 @@
 			<div class="modal-action">
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- <label for="my-modal-3" class="btn" on:click={handleSubmit}>Submit</label> -->
-				<button type="submit" class="btn btn-sm right-2 top-2">
+				<button type="submit" class="btn btn-primary">
 					{#if isEdit}
 						Edit
 					{:else}
