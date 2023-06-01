@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 		}
 	});
 
-	await prisma.$disconnect()
+	await prisma.$disconnect();
 	if (results.id_user === id_user) {
 		return json({ status: 200 });
 	}
