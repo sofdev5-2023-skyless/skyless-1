@@ -1,28 +1,30 @@
-import { client } from '$lib/database/connector';
-import { doctor_table } from '$lib/database/database-variables';
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from '../$types';
 import type { Doctor } from '$lib/types/doctor';
+import { prisma } from '$lib/database/prisma';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 	const { id, name, lastName, cellphone, speciality, email, ci, gender }: Doctor =
 		await request.json();
 
-	const result = await client.query(
-		`INSERT INTO ${doctor_table}(id, name, first_name, last_name, cellphone, speciality, email, gender, ci, speciality_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-		[
-			id,
-			`${name} ${lastName}`,
-			name,
-			lastName,
-			cellphone,
-			speciality,
-			email,
-			gender,
+	const result = await prisma.doctor.create({
+		data: {
+			cellphone: cellphone,
 			ci,
-			speciality
-		]
-	);
+			email,
+			first_name: name,
+			gender,
+			id: id!,
+			last_name: lastName,
+			name: `${name} ${lastName}`,
+			speciality: speciality,
+			speciality_id: speciality
+		}
+	});
+	if (result.id == id) {
+		return json({ ok: 200 });
+	}
 
-	return json(result.rowCount);
+	await prisma.$disconnect();
+	return json({ ok: 400 });
 };

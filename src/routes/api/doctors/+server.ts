@@ -1,22 +1,14 @@
-import { client } from '$lib/database/connector';
-import { doctor_table } from '$lib/database/database-variables';
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { Doctor } from '$lib/types/doctor';
+import { prisma } from '$lib/database/prisma';
+import parseDoctor from '$lib/ts/parseDoctor';
 
 export const GET = async ({}: RequestHandler) => {
-	const result = await client.query(`SELECT * FROM ${doctor_table}`);
+	const doctorsDB = await prisma.doctor.findMany();
 
-	let doctors: Doctor[] = result.rows.map(
-		({ id, first_name, last_name, cellphone, speciality, email }) => ({
-			id: id,
-			name: first_name,
-			lastName: last_name,
-			cellphone: cellphone,
-			speciality: speciality,
-			email: email
-		})
-	);
+	let doctors: Doctor[] = doctorsDB.map((doctor) => parseDoctor(doctor));
 
+	await prisma.$disconnect();
 	return json(doctors);
 };
