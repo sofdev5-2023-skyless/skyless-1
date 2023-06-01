@@ -12,11 +12,13 @@
 	export let id_appointment = 0;
 
 	let isDone = false;
-	let nameDoctor = '';
-	let speciality = '';
-	let formattedDate: string;
-	let formattedHour: string;
-	let isVisibleForm = false;
+	let nameDoctor: string;
+	let speciality: string;
+
+	let formatedDate: string = new Date(date).toISOString().split('T')[0];
+	let formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
+
+	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
 
 	async function deleteAppointment(idAppointment: number) {
@@ -46,8 +48,8 @@
 	});
 
 	$: {
-		formattedDate = new Date(date).toISOString().split('T')[0];
-		formattedHour = hour.slice(0, 5);
+		formatedDate = new Date(date).toISOString().split('T')[0];
+		formatedHour = hour.slice(0, 5);
 	}
 </script>
 
@@ -71,8 +73,10 @@
 		</div>
 	</td>
 	<td>
-		{hour.slice(0, 5)}
-		{parseInt(hour.split(':')[0]) > 12 ? 'p.m.' : 'a.m.'}
+		{new Date(hour).toISOString().split('T')[1].slice(0, 5)}
+		{parseInt(new Date(hour).toISOString().split('T')[1].slice(0, 5).split(':')[0]) > 12
+			? 'p.m.'
+			: 'a.m.'}
 		<br />
 		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
 	</td>

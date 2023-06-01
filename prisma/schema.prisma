@@ -9,7 +9,7 @@ datasource db {
 
 model appointment_form {
   id_appointment Int       @id @default(autoincrement())
-  hour           DateTime? @db.Timetz(6)
+  hour           DateTime @db.Timetz(6)
   description    String
   date           DateTime  @db.Date
   id_doctor      String

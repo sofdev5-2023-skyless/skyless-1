@@ -5,13 +5,13 @@
 	import { goto } from '$app/navigation';
   
 	onMount(async () => {
-	  const resp = await fetch(`/api/doctors/read?id=${$masterKey}`);
-	  const js = await resp.json();
-	  if (Object.keys(js).length === 0) {
-		goto(`/patient/${$masterKey}`);
-		return;
-	  }
-	  areYouDoctor.set(true);
+		const resp = await fetch(`/api/doctors/read?id=${$masterKey}`);
+		const js = await resp.json();
+		if (js.ok === 400) {
+			goto(`/patient/${$masterKey}`);
+			return;
+		}
+		areYouDoctor.set(true);
 	});
   </script>
   
