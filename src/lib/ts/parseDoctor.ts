@@ -10,8 +10,8 @@ const parseDoctor = ({
 	id,
 	last_name,
 	speciality
-}: doctor) => {
-	const doctor: Doctor = {
+}: doctor): Doctor => {
+	return {
 		cellphone,
 		ci,
 		email,
@@ -21,7 +21,6 @@ const parseDoctor = ({
 		speciality,
 		id
 	};
-	return doctor;
 };
 
 export default parseDoctor;

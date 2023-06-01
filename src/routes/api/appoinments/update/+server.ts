@@ -18,6 +18,8 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 			id_doctor
 		}
 	});
+
+	await prisma.$disconnect();
 	if (results.id_appointment == id_appointment) {
 		return json({ status: 200 });
 	}
