@@ -1,58 +1,25 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
-	import { storeReminders } from '$lib/stores/store';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
-	export let id = '';
+	import { editAppointment, createAppoinment} from '$lib/ts/useReminderForm';
 
+	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
 
 	$: isBadDescription;
+	$: isVisible;
 
 	export let appointmentForm: Reminder = {
-		date: '',
-		hour: '',
-		description: '',
-		id_doctor: '',
-		id_user: ''
-	};
-
-	const restartValues = () => {
-		appointmentForm = {
-			date: '',
-			hour: '',
-			description: '',
-			id_doctor: '',
-			id_user: ''
-		};
-		isVisible = false;
-	};
-
-	const createAppoinment = async (appointment: Reminder) => {
-		const js = await fetch('/api/appoinments/create', {
-			method: 'POST',
-			body: JSON.stringify(appointment)
-		});
-
-		if (js.status == 200) {
-			restartValues();
-		}
-	};
-
-	const editAppointment = async (appointment: Reminder) => {
-		const js = await fetch('/api/appoinments/update', {
-			method: 'POST',
-			body: JSON.stringify(appointment)
-		});
-
-		if (js.status == 200) {
-			restartValues();
-		}
+    	date: '',
+    	hour: '',
+    	description: '',
+    	id_doctor: '',
+    	id_user: ''
 	};
 
 	const handleSubmit = async () => {
@@ -61,13 +28,15 @@
 			if (isEdit) {
 				appointmentForm.id_appointment = parseInt(id);
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
-				await editAppointment(appointment);
+				isVisible = await editAppointment(isVisible, appointment, appointmentForm);
+				console.log(isVisible);
 				await updateReminders(appointment.id_user);
 			} else {
 				appointmentForm.id_doctor = id;
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
-				await createAppoinment(appointment);
+				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
+				console.log(isVisible);
 			}
 		} catch (error) {
 			if (error instanceof ZodError) {
@@ -82,7 +51,6 @@
 	};
 </script>
 
-<!-- <label for={`my-modal-${id}`} class="btn">schedule now</label> -->
 <input type="checkbox" id={`my-modal-${id}`} class="modal-toggle" bind:checked={isVisible} />
 
 <div class="modal">
@@ -117,8 +85,6 @@
 			</div>
 
 			<div class="modal-action">
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- <label for="my-modal-3" class="btn" on:click={handleSubmit}>Submit</label> -->
 				<button type="submit" class="btn btn-primary right-2 top-2">
 					{#if isEdit}
 						Edit
