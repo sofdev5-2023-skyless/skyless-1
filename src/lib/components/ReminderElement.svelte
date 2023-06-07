@@ -4,23 +4,25 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import avatar from '$lib/images/default.png';
 
-	export let idDoctor = '0';
-	export let idUser = '0';
-	export let date = '01-01-00';
-	export let hour = '00:00';
-	export let description = 'Default';
-	export let id_appointment = 0;
+	let isDone: boolean = false;
+	export let idDoctor: string = '0';
+	export let idUser: string = '0';
+	export let date: string = '01-01-00';
+	export let hour: string = '1970-01-01T14:16:00.000Z';
+	export let description: string = 'Default';
+	export let id_appointment: number = 0;
 
-	let isDone = false;
-	let nameDoctor = '';
-	let speciality = '';
-	let formattedDate: string;
-	let formattedHour: string;
-	let isVisibleForm = false;
+	let nameDoctor: string;
+	let speciality: string;
+
+	let formatedDate: string = new Date(date).toISOString().split('T')[0];
+	let formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
+
+	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
 
 	async function deleteAppointment(idAppointment: number) {
-		const response = await fetch('/api/appointments/delete', {
+		const response = await fetch('/api/appoinments/delete', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -46,8 +48,8 @@
 	});
 
 	$: {
-		formattedDate = new Date(date).toISOString().split('T')[0];
-		formattedHour = hour.slice(0, 5);
+		formatedDate = new Date(date).toISOString().split('T')[0];
+		formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 	}
 </script>
 
@@ -71,8 +73,10 @@
 		</div>
 	</td>
 	<td>
-		{hour.slice(0, 5)}
-		{parseInt(hour.split(':')[0]) > 12 ? 'p.m.' : 'a.m.'}
+		{new Date(hour).toISOString().split('T')[1].slice(0, 5)}
+		{parseInt(new Date(hour).toISOString().split('T')[1].slice(0, 5).split(':')[0]) > 12
+			? 'p.m.'
+			: 'a.m.'}
 		<br />
 		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
 	</td>

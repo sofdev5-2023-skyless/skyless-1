@@ -1,15 +1,32 @@
-import { client } from '$lib/database/connector';
-import { doctor_table } from '$lib/database/database-variables';
 import { json } from '@sveltejs/kit';
+import type { RequestEvent, RequestHandler } from '../$types';
+import { prisma } from '$lib/database/prisma';
+import parseDoctor from '$lib/ts/parseDoctor';
 
-/** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
-	const { id, name, lastName, cellphone, speciality, email } = await request.json();
+export const POST: RequestHandler = async ({ request }: RequestEvent) => {
+	const { id, name, lastName, cellphone, speciality, email, ci, gender } = await request.json();
 
-	const result = await client.query(
-		`UPDATE ${doctor_table} SET id=$1, name=$2, first_name=$3, last_name=$4, cellphone=$5, speciality=$6, email=$7 WHERE id=$1;`,
-		[id, `${name} ${lastName}`, name, lastName, cellphone, speciality, email]
-	);
+	const result = await prisma.doctor.update({
+		where: {
+			id: id
+		},
+		data: {
+			name: `${name} ${lastName}`,
+			last_name: lastName,
+			first_name: name,
+			cellphone,
+			speciality,
+			email,
+			ci,
+			gender,
+			speciality_id: speciality
+		}
+	});
+	const doctor = parseDoctor(result);
 
-	return json(result.rowCount);
-}
+	await prisma.$disconnect();
+	if (Object.keys(doctor).length > 0) {
+		return json({ ok: 200 });
+	}
+	return json({ ok: 400 });
+};

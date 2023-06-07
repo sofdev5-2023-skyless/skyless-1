@@ -1,12 +1,22 @@
-import { client } from '$lib/database/connector';
-import { doctor_table } from '$lib/database/database-variables';
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from '../$types';
+import { prisma } from '$lib/database/prisma';
+import parseDoctor from '$lib/ts/parseDoctor';
 
 export const GET: RequestHandler = async ({ url }: RequestEvent) => {
 	const name = url.searchParams.get('name') ?? '0';
 
-	const result = await client.query(`SELECT * FROM ${doctor_table} WHERE name ILIKE '%${name}%';`);
+	const doctors = await prisma.doctor.findMany({
+		where: {
+			name: {
+				contains: name,
+				mode: 'insensitive'
+			}
+		}
+	});
 
-	return json(result.rows);
+	const result = doctors.map((doctor) => parseDoctor(doctor));
+
+	await prisma.$disconnect();
+	return json(result);
 };
