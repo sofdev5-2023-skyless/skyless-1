@@ -3,7 +3,7 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
-	import { editAppointment, createAppoinment} from '$lib/ts/useReminderForm';
+	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -15,11 +15,11 @@
 	$: isVisible;
 
 	export let appointmentForm: Reminder = {
-    	date: '',
-    	hour: '',
-    	description: '',
-    	id_doctor: '',
-    	id_user: ''
+		date: '',
+		hour: '',
+		description: '',
+		id_doctor: '',
+		id_user: ''
 	};
 
 	const handleSubmit = async () => {

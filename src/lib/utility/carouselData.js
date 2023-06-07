@@ -9,54 +9,54 @@ import trauma from '$lib/images/carousel-specialities/traumatologia-1.png';
 import urolog from '$lib/images/carousel-specialities/urologia-1.png';
 
 export const images = [
-    {
-        id: 0,
-        name: 'dentista',
-        imgurl: dentista
-    },
-    {
-        id: 1,
-        name: 'ginec',
-        imgurl: ginec
-    },
-    {
-        id: 2,
-        name: 'general',
-        imgurl: general
-    },
-    {
-        id: 3,
-        name: 'oftalm',
-        imgurl: oftalm
-    },
-    {
-        id: 4,
-        name: 'obstet',
-        imgurl: obstet
-    },
-    {
-        id: 5,
-        name: 'oftalm',
-        imgurl: oftalm
-    },
-    {
-        id: 6,
-        name: 'otorrino',
-        imgurl: otorrino
-    },
-    {
-        id: 7,
-        name: 'plastic',
-        imgurl: plastic
-    },
-    {
-        id: 8,
-        name: 'trauma',
-        imgurl: trauma
-    },
-    {
-        id: 9,
-        name: 'urolog',
-        imgurl: urolog
-    }
+	{
+		id: 0,
+		name: 'dentista',
+		imgurl: dentista
+	},
+	{
+		id: 1,
+		name: 'ginec',
+		imgurl: ginec
+	},
+	{
+		id: 2,
+		name: 'general',
+		imgurl: general
+	},
+	{
+		id: 3,
+		name: 'oftalm',
+		imgurl: oftalm
+	},
+	{
+		id: 4,
+		name: 'obstet',
+		imgurl: obstet
+	},
+	{
+		id: 5,
+		name: 'oftalm',
+		imgurl: oftalm
+	},
+	{
+		id: 6,
+		name: 'otorrino',
+		imgurl: otorrino
+	},
+	{
+		id: 7,
+		name: 'plastic',
+		imgurl: plastic
+	},
+	{
+		id: 8,
+		name: 'trauma',
+		imgurl: trauma
+	},
+	{
+		id: 9,
+		name: 'urolog',
+		imgurl: urolog
+	}
 ];

@@ -1,17 +1,17 @@
 <script lang="ts">
-    import type { Doctor } from '$lib/types/doctor';
-    import SearchIcon from '../../icons/SearchIcon.svelte';
-    import DoctorList from '$lib/components/DoctorList.svelte';
-    import { isSearch } from '$lib/stores/store';
+	import type { Doctor } from '$lib/types/doctor';
+	import SearchIcon from '../../icons/SearchIcon.svelte';
+	import DoctorList from '$lib/components/DoctorList.svelte';
+	import { isSearch } from '$lib/stores/store';
 
-    let nameDoctor = '';
+	let nameDoctor = '';
 	let doctors: Doctor[] = [];
 	let inputElement: HTMLInputElement;
-    let actualIsSearch: boolean;
+	let actualIsSearch: boolean;
 
-    const searchDoctor = async () => {
+	const searchDoctor = async () => {
 		actualIsSearch = nameDoctor === '' ? false : true;
-        isSearch.set(actualIsSearch);
+		isSearch.set(actualIsSearch);
 
 		const resp = await fetch(`/api/doctors/search?name=${nameDoctor}`);
 		const json: Doctor[] = await resp.json();
@@ -27,7 +27,7 @@
 			for="default-search"
 			class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label
 		>
-        
+
 		<div class="relative">
 			<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 				<SearchIcon />
