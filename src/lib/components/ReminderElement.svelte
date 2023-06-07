@@ -22,7 +22,7 @@
 	let isConfirmationModalVisible = false;
 
 	async function deleteAppointment(idAppointment: number) {
-		const response = await fetch('/api/appointments/delete', {
+		const response = await fetch('/api/appoinments/delete', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
