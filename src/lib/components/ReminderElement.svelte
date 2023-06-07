@@ -4,14 +4,14 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import avatar from '$lib/images/default.png';
 
-	export let idDoctor = '0';
-	export let idUser = '0';
-	export let date = '01-01-00';
-	export let hour = '00:00';
-	export let description = 'Default';
-	export let id_appointment = 0;
+	let isDone: boolean = false;
+	export let idDoctor: string = '0';
+	export let idUser: string = '0';
+	export let date: string = '01-01-00';
+	export let hour: string = '1970-01-01T14:16:00.000Z';
+	export let description: string = 'Default';
+	export let id_appointment: number = 0;
 
-	let isDone = false;
 	let nameDoctor: string;
 	let speciality: string;
 
@@ -49,7 +49,7 @@
 
 	$: {
 		formatedDate = new Date(date).toISOString().split('T')[0];
-		formatedHour = hour.slice(0, 5);
+		formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 	}
 </script>
 
