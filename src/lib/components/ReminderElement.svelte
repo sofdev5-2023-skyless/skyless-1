@@ -1,36 +1,31 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import ReminderForm from './ReminderForm.svelte';
-	import avatar from '$lib/images/default.png';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
+	import avatar from '$lib/images/default.png';
 
-	let isDone: boolean = false;
-	export let idDoctor: string = '0';
-	export let idUser: string = '0';
-	export let date: string = '01-01-00';
-	export let hour: string = '00:00';
-	export let description: string = 'Default';
-	export let id_appointment: number = 0;
+	export let idDoctor = '0';
+	export let idUser = '0';
+	export let date = '01-01-00';
+	export let hour = '00:00';
+	export let description = 'Default';
+	export let id_appointment = 0;
 
-	let nameDoctor: string;
-	let speciality: string;
-
-	let formatedDate: string = new Date(date).toISOString().split('T')[0];
-	let formatedHour = hour.slice(0, 5);
-
-	let isVisibleForm: boolean;
+	let isDone = false;
+	let nameDoctor = '';
+	let speciality = '';
+	let formattedDate: string;
+	let formattedHour: string;
+	let isVisibleForm = false;
 	let isConfirmationModalVisible = false;
-	$: isVisibleForm;
 
-	async function deleteAppointment(id_appointment: number) {
-		const response = await fetch('/api/appoinments/delete', {
+	async function deleteAppointment(idAppointment: number) {
+		const response = await fetch('/api/appointments/delete', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				id_appointment: id_appointment
-			})
+			body: JSON.stringify({ id_appointment: idAppointment })
 		});
 
 		updateReminders(idUser);
@@ -38,17 +33,22 @@
 		return response.json();
 	}
 
-	const handleShowForm = () => {
+	function handleShowForm() {
 		console.log('click');
 		isVisibleForm = !isVisibleForm;
-	};
+	}
 
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
-		const js = await resp.json();
-		nameDoctor = js.name;
-		speciality = js.speciality;
+		const { name, speciality: doctorSpeciality } = await resp.json();
+		nameDoctor = name;
+		speciality = doctorSpeciality;
 	});
+
+	$: {
+		formattedDate = new Date(date).toISOString().split('T')[0];
+		formattedHour = hour.slice(0, 5);
+	}
 </script>
 
 <tr class="hover" class:line-through={isDone}>
