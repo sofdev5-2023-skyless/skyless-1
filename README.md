@@ -22,7 +22,6 @@ Tools:
 
 - Keycloack
 
-
 ## Authors
 
 - [@santihsdev](https://github.com/santihsdev)
@@ -64,7 +63,6 @@ Tools:
 
   - [ ] Tarea: Permitir a los usuarios configurar sus preferencias de recordatorios
 
-
 ## Deployment
 
 To deploy this project run
@@ -78,7 +76,6 @@ npm install zod
 sudo docker-compose up
 
 ```
-
 
 ## Run Locally
 
@@ -125,7 +122,6 @@ npm run dev
 To use the application we use a realm called `test` , so it has to be created.
 
 ![Untitled](README%20215ebc0551504b14b1c67e82333a7e40/Untitled.png)
-
 
 With all this information charge by this json file when you create the new realm test, all this information is also located on the data-base/keycloak/realm-export.json path.
 
@@ -2415,6 +2411,7 @@ With all this information charge by this json file when you create the new realm
   }
 }
 ```
+
 # How use the app
 
 The app in the first view will show the home

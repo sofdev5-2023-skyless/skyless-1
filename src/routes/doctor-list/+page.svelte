@@ -15,11 +15,11 @@
 	});
 
 	isSearch.subscribe((actual) => {
-			actualIsSearch = actual;
+		actualIsSearch = actual;
 	});
 </script>
 
-<Searcher/>
+<Searcher />
 
 <div class="flex flex-col min-h-screen">
 	{#if !actualIsSearch}
