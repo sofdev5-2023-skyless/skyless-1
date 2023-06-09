@@ -1,9 +1,9 @@
 <script>
-	import BagIcon from '$lib/icons/BagIcon.svelte';
-	import CardIcon from '$lib/icons/CardIcon.svelte';
-	import ClockIcon from '$lib/icons/ClockIcon.svelte';
-	import HatIcon from '$lib/icons/HatIcon.svelte';
-	import PhoneIcon from '$lib/icons/PhoneIcon.svelte';
+	import BagIcon from '../../icons/BagIcon.svelte';
+	import CardIcon from '../../icons/CardIcon.svelte';
+	import ClockIcon from '../../icons/ClockIcon.svelte';
+	import HatIcon from '../../icons/HatIcon.svelte';
+	import PhoneIcon from '../../icons/PhoneIcon.svelte';
 	import AppointmentForm from './AppointmentForm.svelte';
 </script>
 

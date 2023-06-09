@@ -6,7 +6,7 @@
 </script>
 
 <div class="max-w-4xl, container" data-testid="carousel">
-	<Carousel {images} loop {showCaptions} {showThumbs} duration="2500" />
+	<Carousel {images} loop {showCaptions} {showThumbs} duration={2500} />
 </div>
 
 <style>
