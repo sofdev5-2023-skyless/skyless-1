@@ -10,5 +10,14 @@
 </div>
 
 <style>
-	@import '$lib/utility/carousel.css';
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: auto;
+		margin: auto;
+		padding: auto;
+		max-width: auto;
+		margin-right: 90px;
+	}
 </style>
