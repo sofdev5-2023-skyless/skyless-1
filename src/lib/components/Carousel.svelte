@@ -5,19 +5,10 @@
 	let showCaptions = false;
 </script>
 
-<div class="max-w-4xl, container" data-testid="carousel">
+<div class="carousel" data-testid="carousel">
 	<Carousel {images} loop {showCaptions} {showThumbs} duration={2500} />
 </div>
 
 <style>
-	.container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: auto;
-		margin: auto;
-		padding: auto;
-		max-width: auto;
-		margin-right: 90px;
-	}
+	@import '$lib/utility/carousel.css';
 </style>
