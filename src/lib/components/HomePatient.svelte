@@ -9,7 +9,8 @@
 	import traumatologia from '$lib/images/especialidades/traumatologia.png';
 	import otorrinolaringologia from '$lib/images/especialidades/otorrinolaringologia.png';
 	import cirugiaplastica from '$lib/images/especialidades/cirugiaplastica.png';
-
+	import SideMenu from '$lib/components/SideMenu.svelte';
+	import { menuOpen } from '$lib/stores/store';
 	import specialities from '$lib/data/specialities.json';
 	import Register from './Register.svelte';
 
@@ -29,7 +30,9 @@
 </script>
 
 <Carousel />
-
+{#if $menuOpen}
+	<SideMenu />
+{/if}
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-20 sm:ml-64">
 	{#each specialities as { Speciality, Description, Path }, index}
 		<div
