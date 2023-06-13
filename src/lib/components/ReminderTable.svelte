@@ -6,11 +6,12 @@
 
 	let reminders: Reminder[] = [];
 	storeReminders.subscribe((value) => (reminders = value));
-
 	onMount(async () => {
-		reminders = await fetch(`/api/appoinments/get-all?key=${localStorage.getItem('key')}`).then(
-			(item) => item.json()
-		);
+		const isDoctor = false;
+		const key = localStorage.getItem('key');
+		const url = `/api/appoinments/get-all?key=${key}&isDoctor=${isDoctor}`;
+		const response = await fetch(url);
+		const reminders = await response.json();
 		storeReminders.set(reminders);
 		console.log(reminders);
 	});
