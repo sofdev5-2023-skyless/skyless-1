@@ -7,13 +7,11 @@
 	storeReminders.subscribe((value) => (reminders = value));
 
 	onMount(async () => {
-	const isDoctor = true
   	const key = localStorage.getItem('key');
-	const url = `/api/appoinments/get-all?key=${key}&isDoctor=${isDoctor}`;
+	const url = `/api/appoinments/get-all-dr?key=${key}`;
   	const response = await fetch(url);
     const reminders = await response.json();
     storeReminders.set(reminders);
-    	
 });
 
 </script>
