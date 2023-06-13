@@ -12,7 +12,7 @@
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
 
-	let nameDoctor: string;
+	let namePatient: string;
 	let speciality: string;
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
@@ -43,7 +43,8 @@
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
 		const { name, speciality: doctorSpeciality } = await resp.json();
-		nameDoctor = name;
+        const response = await fetch(`/api/patients/read?id=${idUser}`);
+        namePatient = await response.json();        
 		speciality = doctorSpeciality;
 	});
 
@@ -63,7 +64,7 @@
 				</div>
 			</div>
 			<div>
-				<div class="font-bold">{nameDoctor}</div>
+				<div class="font-bold">{namePatient}</div>
 				<div class="text-sm opacity-50">{speciality}</div>
 			</div>
 		</div>

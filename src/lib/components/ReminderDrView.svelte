@@ -56,13 +56,14 @@
 	</div>
 </div>
 
+
 <style>
 	form {
 		max-width: 400px;
 		margin: 0 auto;
 		padding: 2rem;
-		background-color: #000000;
-		color: rgb(254, 254, 254);
+		background-color: #ffffff;
+		color: black;
 		font-family: Arial, serif;
 	}
 	.form-control {
@@ -84,7 +85,7 @@
 	.textarea {
 		width: 100%;
 		padding: 0.5rem;
-		border: 1px solid #000000;
+		border: 1px solid #cccccc;
 		border-radius: 0.25rem;
 		font-size: 1rem;
 		line-height: 1.5;
@@ -92,6 +93,6 @@
 	}
 	.textarea {
 		resize: vertical;
-		background-color: rgb(0, 0, 0);
+		background-color: white;
 	}
 </style>
