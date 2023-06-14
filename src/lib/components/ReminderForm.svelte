@@ -20,7 +20,7 @@
 
 	export let appointmentForm: Reminder = {
 		date: '',
-		hour: '',
+		hour: 0,
 		description: '',
 		id_doctor: '',
 		id_user: ''
@@ -40,7 +40,6 @@
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
-
 				console.log(isVisible);
 			}
 		} catch (error) {
@@ -56,7 +55,9 @@
 	};
 
 	const loadSchedules = async () => {
-		const resp = await fetch(`/api/doctor_schedule/read?id=${id}`);
+		const resp = await fetch(
+			`/api/doctor_schedule/read-doctor?id=${isEdit ? appointmentForm.id_doctor : id}`
+		);
 		const schedules: doctor_schedule[] = await resp.json();
 		return schedules;
 	};
@@ -82,18 +83,16 @@
 					bind:value={appointmentForm.date}
 				/>
 			</div>
-			<div class="form-control">
-				<label class="label" for="hour">Hora:</label>
-				<input class="input" type="time" name="hour" required bind:value={appointmentForm.hour} />
-			</div>
-			<select class="select select-bordered w-full max-w-xs">
-				<option disabled selected>Select a schedule available</option>
+			<select class="select select-bordered w-full max-w-xs" bind:value={appointmentForm.hour}>
 				{#await loadSchedules()}
 					<option value="">Loading...</option>
 				{:then schedules}
 					{#each schedules as schedule (schedule.id)}
+						<option disabled selected>Select a schedule available</option>
 						{#if !schedule.occupied}
 							<option value={schedule.id}>{schedule.schedule}</option>
+						{:else}
+							<option selected value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
 				{/await}

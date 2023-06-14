@@ -8,12 +8,13 @@ datasource db {
 }
 
 model appointment_form {
-  id_appointment Int      @id @default(autoincrement())
-  hour           DateTime @db.Timetz(6)
-  description    String
-  date           DateTime @db.Date
-  id_doctor      String
-  id_user        String
+  id_appointment  Int              @id @default(autoincrement())
+  description     String
+  date            DateTime         @db.Date
+  id_doctor       String
+  id_user         String
+  hour            Int
+  doctor_schedule doctor_schedule? @relation(fields: [hour], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hour")
 }
 
 model doctor {
@@ -37,8 +38,9 @@ model speciality {
 }
 
 model doctor_schedule {
-  id        Int     @id
-  id_doctor String
-  schedule  String  @db.VarChar(255)
-  occupied  Boolean
+  id               Int                @id
+  id_doctor        String
+  schedule         String             @db.VarChar(255)
+  occupied         Boolean
+  appointment_form appointment_form[]
 }
