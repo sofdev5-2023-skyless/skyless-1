@@ -4,12 +4,16 @@
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
+	import { parseDate } from '$lib/ts/parseDate';
+	import type { doctor_schedule } from '@prisma/client';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
+
+	const currenDay = parseDate(new Date());
 
 	$: isBadDescription;
 	$: isVisible;
@@ -36,6 +40,7 @@
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
+
 				console.log(isVisible);
 			}
 		} catch (error) {
@@ -48,6 +53,12 @@
 				});
 			}
 		}
+	};
+
+	const loadSchedules = async () => {
+		const resp = await fetch(`/api/doctor_schedule/read?id=${id}`);
+		const schedules: doctor_schedule[] = await resp.json();
+		return schedules;
 	};
 </script>
 
@@ -62,12 +73,31 @@
 			<h1 class="title">Book Medical Appointment</h1>
 			<div class="form-control">
 				<label class="label" for="date">Fecha:</label>
-				<input class="input" type="date" name="date" required bind:value={appointmentForm.date} />
+				<input
+					class="input"
+					type="date"
+					name="date"
+					min={currenDay}
+					required
+					bind:value={appointmentForm.date}
+				/>
 			</div>
 			<div class="form-control">
 				<label class="label" for="hour">Hora:</label>
 				<input class="input" type="time" name="hour" required bind:value={appointmentForm.hour} />
 			</div>
+			<select class="select select-bordered w-full max-w-xs">
+				<option disabled selected>Select a schedule available</option>
+				{#await loadSchedules()}
+					<option value="">Loading...</option>
+				{:then schedules}
+					{#each schedules as schedule (schedule.id)}
+						{#if !schedule.occupied}
+							<option value={schedule.id}>{schedule.schedule}</option>
+						{/if}
+					{/each}
+				{/await}
+			</select>
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
 				<textarea

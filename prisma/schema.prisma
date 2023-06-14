@@ -8,10 +8,10 @@ datasource db {
 }
 
 model appointment_form {
-  id_appointment Int       @id @default(autoincrement())
+  id_appointment Int      @id @default(autoincrement())
   hour           DateTime @db.Timetz(6)
   description    String
-  date           DateTime  @db.Date
+  date           DateTime @db.Date
   id_doctor      String
   id_user        String
 }
@@ -34,4 +34,11 @@ model speciality {
   id             String   @id @db.VarChar(10)
   specialityname String   @db.VarChar(50)
   doctor         doctor[]
+}
+
+model doctor_schedule {
+  id        Int     @id
+  id_doctor String
+  schedule  String  @db.VarChar(255)
+  occupied  Boolean
 }
