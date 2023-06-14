@@ -10,6 +10,7 @@
 	let messageDescription: string = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
+	export let patientName: string;
 
 	$: isBadDescription;
 	$: isVisible;
@@ -33,13 +34,12 @@
 			<h1>{id}</h1>
 			<h1 class="title">Assigned Medical Appointment</h1>
 			<div class="form-control">
-				<label class="label" for="name">ID-Paciente:{appointmentForm.id_user}</label>
-				<label class="label" for="name">Nombre:"Here Goes Patient's Name"</label>
-				<label class="label" for="date">Fecha:{appointmentForm.date}</label>
+                <label class="label" for="name">ID-Patient: {appointmentForm.id_user}</label>
+                <label class="label" for="name">Name: {patientName}</label>
+				<label class="label" for="date">Date: {appointmentForm.date}</label>
 			</div>
 			<div class="form-control">
-				<label class="label" for="hour">Hora:</label>
-				<label class="label" for="hour">{appointmentForm.hour}</label>
+				<label class="label" for="hour">Hour: {appointmentForm.hour}</label>
 			</div>
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
