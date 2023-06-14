@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import ReminderForm from './ReminderDrView.svelte';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
+	import { masterToken, masterKey } from '$lib/stores/store';
 	import avatar from '$lib/images/default.png';
 
 	let isDone: boolean = false;
@@ -14,12 +15,17 @@
 
 	let namePatient: string;
 	let speciality: string;
+	let token: string;
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
 	let formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 
 	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
+
+	masterToken.subscribe((value) => {
+		token = value;
+	});
 
 	async function deleteAppointment(idAppointment: number) {
 		const response = await fetch('/api/appoinments/delete', {
@@ -43,8 +49,11 @@
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
 		const { name, speciality: doctorSpeciality } = await resp.json();
-		const response = await fetch(`/api/patients/read?id=${idUser}`);
-		namePatient = await response.json();
+        
+        const resps = await fetch(`/api/patients/read?id=${idUser}&token=${token}`);
+		const { firstName, lastName } =  await resps.json();
+
+		namePatient = firstName + ' ' + lastName
 		speciality = doctorSpeciality;
 	});
 
@@ -64,7 +73,7 @@
 			</div>
 			<div>
 				<div class="font-bold">{namePatient}</div>
-				<div class="text-sm opacity-50">{speciality}</div>
+				<div class="text-sm opacity-50">"{speciality}"</div>
 			</div>
 		</div>
 	</td>
@@ -106,6 +115,7 @@
 			isEdit={true}
 			id={id_appointment + ''}
 			isVisible={isVisibleForm}
+			patientName={namePatient}
 			appointmentForm={{
 				date: formatedDate,
 				hour: formatedHour,
