@@ -11,11 +11,7 @@
 	<header class="sticky top-0 z-50">
 		<Header />
 	</header>
-	{#if $menuOpen}
-		<SideMenu />
-	{/if}
 
 	<slot />
-
 	<Footer />
 </div>

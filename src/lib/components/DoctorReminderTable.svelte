@@ -1,19 +1,17 @@
 <script lang="ts">
-	import ReminderElement from '$lib/components/ReminderElement.svelte';
+	import ReminderElement from '$lib/components/ReminderComponentDrData.svelte';
 	import { storeReminders } from '$lib/stores/store';
 	import type { Reminder } from '$lib/types/reminder';
 	import { onMount } from 'svelte';
-
 	let reminders: Reminder[] = [];
 	storeReminders.subscribe((value) => (reminders = value));
+
 	onMount(async () => {
-		const isDoctor = false;
 		const key = localStorage.getItem('key');
-		const url = `/api/appoinments/get-all?key=${key}&isDoctor=${isDoctor}`;
+		const url = `/api/appoinments/get-all-dr?key=${key}`;
 		const response = await fetch(url);
 		const reminders = await response.json();
 		storeReminders.set(reminders);
-		console.log(reminders);
 	});
 </script>
 
@@ -21,11 +19,9 @@
 	<div class="overflow-x-auto w-full">
 		<table class="table w-full">
 			{#if reminders.length !== 0}
-				<!-- head -->
 				<thead>
 					<tr>
-						<th />
-						<th>Doctor</th>
+						<th>Patient</th>
 						<th>Date</th>
 						<th>Description</th>
 						<th />
