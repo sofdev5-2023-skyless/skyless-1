@@ -21,7 +21,7 @@
 
 <Searcher />
 
-<div class="flex flex-col min-h-screen">
+<div class="flex flex-col min-h-screen pb-10">
 	{#if !actualIsSearch}
 		{#each specilities as { id, name } (id)}
 			<DoctorList

@@ -1,22 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import ReminderForm from './ReminderForm.svelte';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import avatar from '$lib/images/default.png';
+	import type { doctor_schedule } from '@prisma/client';
+	import { updateDoctorSchedule } from '$lib/ts/useReminderForm';
+	import type { Doctor } from '$lib/types/doctor';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
 	export let idUser: string = '0';
 	export let date: string = '01-01-00';
-	export let hour: string = '1970-01-01T14:16:00.000Z';
+	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
 
-	let nameDoctor: string;
-	let speciality: string;
-
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
-	let formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 
 	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
@@ -31,6 +29,7 @@
 		});
 
 		updateReminders(idUser);
+		updateDoctorSchedule(hour);
 
 		return response.json();
 	}
@@ -40,16 +39,20 @@
 		isVisibleForm = !isVisibleForm;
 	}
 
-	onMount(async () => {
+	const loadSchedule = async (hour: number) => {
+		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
+		const result: doctor_schedule = await resp.json();
+		return result;
+	};
+
+	const loadDoctor = async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
-		const { name, speciality: doctorSpeciality } = await resp.json();
-		nameDoctor = name;
-		speciality = doctorSpeciality;
-	});
+		const doctor: Doctor = await resp.json();
+		return doctor;
+	};
 
 	$: {
 		formatedDate = new Date(date).toISOString().split('T')[0];
-		formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 	}
 </script>
 
@@ -67,16 +70,22 @@
 				</div>
 			</div>
 			<div>
-				<div class="font-bold">{nameDoctor}</div>
-				<div class="text-sm opacity-50">{speciality}</div>
+				{#await loadDoctor()}
+					<div class="font-bold">Dr. Name Lastname</div>
+					<div class="text-sm opacity-50">Speciality</div>
+				{:then { name, lastName, speciality }}
+					<div class="font-bold">Dr. {name} {lastName}</div>
+					<div class="text-sm opacity-50">{speciality}</div>
+				{/await}
 			</div>
 		</div>
 	</td>
 	<td>
-		{new Date(hour).toISOString().split('T')[1].slice(0, 5)}
-		{parseInt(new Date(hour).toISOString().split('T')[1].slice(0, 5).split(':')[0]) > 12
-			? 'p.m.'
-			: 'a.m.'}
+		{#await loadSchedule(hour)}
+			Loading...
+		{:then data}
+			{data.schedule}
+		{/await}
 		<br />
 		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
 	</td>
@@ -112,7 +121,7 @@
 			isVisible={isVisibleForm}
 			appointmentForm={{
 				date: formatedDate,
-				hour: formatedHour,
+				hour: hour,
 				description: description,
 				id_doctor: idDoctor,
 				id_user: idUser
@@ -182,27 +191,6 @@
 </tr>
 
 <style>
-	.my-button {
-		background-color: #79ccd1;
-		border-radius: 8px;
-		border: none;
-		color: white;
-		font-size: 1rem;
-		padding: 10px 20px;
-		height: 42px;
-		width: 90px;
-		text-align: center;
-		cursor: pointer;
-	}
-
-	.my-button:hover {
-		background-color: #2ca2d8;
-	}
-	.my-button:focus {
-		outline: none;
-		box-shadow: 0 0 0 3px rgba(74, 134, 232, 0.6);
-	}
-
 	.delete-btn {
 		background-color: #e74c3c;
 		position: relative;

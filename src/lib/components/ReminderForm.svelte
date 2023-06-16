@@ -3,20 +3,28 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
-	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
+	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
+	import { parseDate } from '$lib/ts/parseDate';
+	import type { doctor_schedule } from '@prisma/client';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
+	let isBadHour = false;
+	let messageHour = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
 
+	const currenDay = parseDate(new Date());
+
 	$: isBadDescription;
 	$: isVisible;
+	$: isBadHour;
+	$: messageHour;
 
 	export let appointmentForm: Reminder = {
 		date: '',
-		hour: '',
+		hour: 0,
 		description: '',
 		id_doctor: '',
 		id_user: ''
@@ -25,6 +33,7 @@
 	const handleSubmit = async () => {
 		try {
 			isBadDescription = false;
+			isBadHour = false;
 			if (isEdit) {
 				appointmentForm.id_appointment = parseInt(id);
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
@@ -36,7 +45,7 @@
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
-				console.log(isVisible);
+				await updateDoctorSchedule(appointmentForm.hour, true);
 			}
 		} catch (error) {
 			if (error instanceof ZodError) {
@@ -44,10 +53,21 @@
 					if (err.path[0] === 'description') {
 						isBadDescription = true;
 						messageDescription = err.message;
+					} else if (err.path[0] === 'hour') {
+						isBadHour = true;
+						messageHour = err.message;
 					}
 				});
 			}
 		}
+	};
+
+	const loadSchedules = async () => {
+		const resp = await fetch(
+			`/api/doctor_schedule/read-doctor?id=${isEdit ? appointmentForm.id_doctor : id}`
+		);
+		const schedules: doctor_schedule[] = await resp.json();
+		return schedules;
 	};
 </script>
 
@@ -62,12 +82,35 @@
 			<h1 class="title">Book Medical Appointment</h1>
 			<div class="form-control">
 				<label class="label" for="date">Fecha:</label>
-				<input class="input" type="date" name="date" required bind:value={appointmentForm.date} />
+				<input
+					class="input"
+					type="date"
+					name="date"
+					min={currenDay}
+					required
+					bind:value={appointmentForm.date}
+				/>
 			</div>
-			<div class="form-control">
-				<label class="label" for="hour">Hora:</label>
-				<input class="input" type="time" name="hour" required bind:value={appointmentForm.hour} />
-			</div>
+			<select class="select select-bordered w-full max-w-xs" bind:value={appointmentForm.hour}>
+				{#await loadSchedules()}
+					<option value="">Loading...</option>
+				{:then schedules}
+					{#each schedules as schedule (schedule.id)}
+						<option disabled selected value={0}>Select a schedule available</option>
+						{#if !schedule.occupied}
+							<option value={schedule.id}>{schedule.schedule}</option>
+						{/if}
+						{#if isEdit}
+							<option selected value={schedule.id}>{schedule.schedule}</option>
+						{/if}
+					{/each}
+				{/await}
+			</select>
+			{#if isBadHour}
+				<label for="description" class="label">
+					<span class="label-text-alt text-red-500">{messageHour}</span>
+				</label>
+			{/if}
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
 				<textarea

@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 	const results = await prisma.appointment_form.create({
 		data: {
 			date: new Date(date),
-			hour: DateTime.fromFormat(hour, 'HH:mm').setZone('UTC', { keepLocalTime: true }).toString(),
+			hour: Number(hour),
 			description,
 			id_doctor,
 			id_user

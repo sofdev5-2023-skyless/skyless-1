@@ -1,10 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from './$types';
 import { prisma } from '$lib/database/prisma';
-import { DateTime } from 'luxon';
+import type { Reminder } from '$lib/types/reminder';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
-	const { hour, description, date, id_doctor, id_user, id_appointment } = await request.json();
+	const { hour, description, date, id_doctor, id_user, id_appointment }: Reminder =
+		await request.json();
 
 	const results = await prisma.appointment_form.update({
 		where: {
@@ -13,7 +14,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 		data: {
 			date: new Date(date),
 			description,
-			hour: DateTime.fromFormat(hour, 'HH:mm').setZone('UTC', { keepLocalTime: true }).toString(),
+			hour: hour,
 			id_user,
 			id_doctor
 		}
