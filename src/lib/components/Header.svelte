@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LoginIcon from '../../icons/LoginIcon.svelte';
 	import MedicalCheckLogo from '$lib/images/MedicalCheckLogo.png';
-	import { masterKey } from '$lib/stores/store';
+	import { areYouDoctor, masterKey } from '$lib/stores/store';
 	import DropdownMenu from './DropdownMenu.svelte';
 
 	let id: string;
@@ -12,9 +12,15 @@
 <nav class="fixed top-0 z-59 w-full navbar bg-base-100">
 	<div class="navbar-start">
 		<DropdownMenu />
-		<a href={id === 'key-default' ? '/' : `/patient/${id}`}
-			><img src={MedicalCheckLogo} width="200px" alt="" /></a
-		>
+		{#if !$areYouDoctor}
+			<a href={id === 'key-default' ? '/' : `/patient/${id}`}
+				><img src={MedicalCheckLogo} width="200px" alt="" /></a
+			>
+		{:else}
+			<a href={id === 'key-default' ? '/' : `/doctor/${id}`}
+				><img src={MedicalCheckLogo} width="200px" alt="" /></a
+			>
+		{/if}
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal">
