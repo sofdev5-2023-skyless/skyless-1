@@ -6,11 +6,11 @@
 	export let specialityName: string = 'Default';
 	export let specialityPath: string = '';
 	export let isOpen: boolean = false;
-	export let doctors: Doctor[] = [];
-	onMount(async () => {
-		let resp = await fetch(`${specialityPath}`);
-		doctors = await resp.json();
-	});
+	const loadDoctors = async () => {
+		const resp = await fetch(`${specialityPath}`);
+		const doctors: Doctor[] = await resp.json();
+		return doctors;
+	};
 
 	const changeState = () => {
 		isOpen = !isOpen;
@@ -27,9 +27,20 @@
 		</div>
 		<div class="collapse-content">
 			<!-- <DoctorCard /> -->
-			{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
-				<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
-			{/each}
+			{#await loadDoctors()}
+				<div class="container">
+					<div class="grid h-20 card bg-base-300 rounded-box place-items-center">
+						Loading Doctors...
+					</div>
+				</div>
+			{:then doctors}
+				{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
+					<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
+					<div class="flex flex-col w-full">
+						<div class="divider" />
+					</div>
+				{/each}
+			{/await}
 		</div>
 	</div>
 </div>

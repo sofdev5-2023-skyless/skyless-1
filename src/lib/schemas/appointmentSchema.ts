@@ -2,9 +2,12 @@ import { z } from 'zod';
 
 export const appointmentSchema = z.object({
 	date: z.string().nonempty('The date is required'),
-	hour: z.number().nonnegative('The hour is required'),
+	hour: z
+		.number()
+		.positive()
+		.refine((value) => value > 0, { message: 'A schedule is required' }),
 	description: z.string().min(5, {
-		message: 'Description small'
+		message: 'A description is required'
 	}),
 	id_doctor: z.string().nonempty('El id_doctor es requerido.'),
 	id_user: z.string().nonempty('El id_user es requerido.'),

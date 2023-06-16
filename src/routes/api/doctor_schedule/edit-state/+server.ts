@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 
 	const result = await prisma.doctor_schedule.update({
 		data: {
-			occupied
+			occupied: occupied == 0 ? false : true
 		},
 		where: {
 			id: id

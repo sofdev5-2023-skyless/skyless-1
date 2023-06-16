@@ -3,13 +3,15 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
-	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
+	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
 	import { parseDate } from '$lib/ts/parseDate';
 	import type { doctor_schedule } from '@prisma/client';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
+	let isBadHour = false;
+	let messageHour = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
 
@@ -17,6 +19,8 @@
 
 	$: isBadDescription;
 	$: isVisible;
+	$: isBadHour;
+	$: messageHour;
 
 	export let appointmentForm: Reminder = {
 		date: '',
@@ -29,6 +33,7 @@
 	const handleSubmit = async () => {
 		try {
 			isBadDescription = false;
+			isBadHour = false;
 			if (isEdit) {
 				appointmentForm.id_appointment = parseInt(id);
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
@@ -40,7 +45,7 @@
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
-				console.log(isVisible);
+				await updateDoctorSchedule(appointmentForm.hour, true);
 			}
 		} catch (error) {
 			if (error instanceof ZodError) {
@@ -48,6 +53,9 @@
 					if (err.path[0] === 'description') {
 						isBadDescription = true;
 						messageDescription = err.message;
+					} else if (err.path[0] === 'hour') {
+						isBadHour = true;
+						messageHour = err.message;
 					}
 				});
 			}
@@ -88,15 +96,21 @@
 					<option value="">Loading...</option>
 				{:then schedules}
 					{#each schedules as schedule (schedule.id)}
-						<option disabled selected>Select a schedule available</option>
+						<option disabled selected value={0}>Select a schedule available</option>
 						{#if !schedule.occupied}
 							<option value={schedule.id}>{schedule.schedule}</option>
-						{:else}
+						{/if}
+						{#if isEdit}
 							<option selected value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
 				{/await}
 			</select>
+			{#if isBadHour}
+				<label for="description" class="label">
+					<span class="label-text-alt text-red-500">{messageHour}</span>
+				</label>
+			{/if}
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
 				<textarea

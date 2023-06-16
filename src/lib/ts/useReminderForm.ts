@@ -1,17 +1,9 @@
 import type { Reminder } from '$lib/types/reminder';
 
-// export let appointmentForm: Reminder = {
-//     date: '',
-//     hour: '',
-//     description: '',
-//     id_doctor: '',
-//     id_user: ''
-// };
-
 const restartValues = (appointmentForm: Reminder) => {
 	appointmentForm = {
 		date: '',
-		hour: '',
+		hour: 0,
 		description: '',
 		id_doctor: '',
 		id_user: ''
@@ -50,4 +42,19 @@ export const editAppointment = async (
 		isVisible = restartValues(appointmentForm);
 	}
 	return isVisible;
+};
+
+export const updateDoctorSchedule = async (idDoctorSchedule: number, occupied: boolean = false) => {
+	const resp = await fetch(`/api/doctor_schedule/edit-state`, {
+		method: 'POST',
+		body: JSON.stringify({
+			id: idDoctorSchedule,
+			occupied: occupied ? 1 : 0
+		})
+	});
+	const result = await resp.json();
+	if (result.ok === 200) {
+		return true;
+	}
+	return false;
 };
