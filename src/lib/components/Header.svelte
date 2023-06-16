@@ -13,14 +13,14 @@
 	<div class="navbar-start">
 		<DropdownMenu />
 		{#if !$areYouDoctor}
-		<a href={id === 'key-default' ? '/' : `/patient/${id}`}
-			><img src={MedicalCheckLogo} width="200px" alt="" /></a
-		>
+			<a href={id === 'key-default' ? '/' : `/patient/${id}`}
+				><img src={MedicalCheckLogo} width="200px" alt="" /></a
+			>
 		{:else}
-		<a href={id === 'key-default' ? '/' : `/doctor/${id}`}
-			><img src={MedicalCheckLogo} width="200px" alt="" /></a
-		>
-		{/if}		
+			<a href={id === 'key-default' ? '/' : `/doctor/${id}`}
+				><img src={MedicalCheckLogo} width="200px" alt="" /></a
+			>
+		{/if}
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal">

@@ -49,11 +49,11 @@
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
 		const { name, speciality: doctorSpeciality } = await resp.json();
-        
-        const resps = await fetch(`/api/patients/read?id=${idUser}&token=${token}`);
-		const { firstName, lastName } =  await resps.json();
 
-		namePatient = firstName + ' ' + lastName
+		const resps = await fetch(`/api/patients/read?id=${idUser}&token=${token}`);
+		const { firstName, lastName } = await resps.json();
+
+		namePatient = firstName + ' ' + lastName;
 		speciality = doctorSpeciality;
 	});
 
