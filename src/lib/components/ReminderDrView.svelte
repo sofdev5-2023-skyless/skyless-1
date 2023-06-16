@@ -19,7 +19,7 @@
 		hour: '',
 		description: '',
 		id_doctor: '',
-		id_user: '',
+		id_user: ''
 	};
 </script>
 
@@ -33,8 +33,8 @@
 			<h1>{id}</h1>
 			<h1 class="title">Assigned Medical Appointment</h1>
 			<div class="form-control">
-                <label class="label" for="name">ID-Paciente:{appointmentForm.id_user}</label>
-                <label class="label" for="name">Nombre:"Here Goes Patient's Name"</label>
+				<label class="label" for="name">ID-Paciente:{appointmentForm.id_user}</label>
+				<label class="label" for="name">Nombre:"Here Goes Patient's Name"</label>
 				<label class="label" for="date">Fecha:{appointmentForm.date}</label>
 			</div>
 			<div class="form-control">
@@ -49,13 +49,12 @@
 					name="description"
 					rows="4"
 					bind:value={appointmentForm.description}
-                    readonly
+					readonly
 				/>
 			</div>
 		</form>
 	</div>
 </div>
-
 
 <style>
 	form {
@@ -81,7 +80,7 @@
 		margin: auto;
 		text-align: center;
 	}
-	
+
 	.textarea {
 		width: 100%;
 		padding: 0.5rem;

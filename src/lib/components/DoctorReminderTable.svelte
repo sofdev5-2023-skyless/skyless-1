@@ -7,13 +7,12 @@
 	storeReminders.subscribe((value) => (reminders = value));
 
 	onMount(async () => {
-  	const key = localStorage.getItem('key');
-	const url = `/api/appoinments/get-all-dr?key=${key}`;
-  	const response = await fetch(url);
-    const reminders = await response.json();
-    storeReminders.set(reminders);
-});
-
+		const key = localStorage.getItem('key');
+		const url = `/api/appoinments/get-all-dr?key=${key}`;
+		const response = await fetch(url);
+		const reminders = await response.json();
+		storeReminders.set(reminders);
+	});
 </script>
 
 <div class="sm:block pt-16 pb-0 pl-64">
@@ -36,7 +35,7 @@
 							{description}
 							{hour}
 							idDoctor={id_doctor}
-							idUser={id_user} 
+							idUser={id_user}
 						/>
 					{/each}
 				</tbody>

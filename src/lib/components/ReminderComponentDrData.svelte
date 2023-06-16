@@ -43,8 +43,8 @@
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
 		const { name, speciality: doctorSpeciality } = await resp.json();
-        const response = await fetch(`/api/patients/read?id=${idUser}`);
-        namePatient = await response.json();        
+		const response = await fetch(`/api/patients/read?id=${idUser}`);
+		namePatient = await response.json();
 		speciality = doctorSpeciality;
 	});
 
@@ -55,7 +55,6 @@
 </script>
 
 <tr class="hover" class:line-through={isDone}>
-	
 	<td>
 		<div class="flex items-center space-x-3">
 			<div class="avatar">
