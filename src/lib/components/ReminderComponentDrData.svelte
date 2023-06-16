@@ -4,22 +4,20 @@
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import { masterToken, masterKey } from '$lib/stores/store';
 	import avatar from '$lib/images/default.png';
+	import type { doctor_schedule } from '@prisma/client';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
 	export let idUser: string = '0';
 	export let date: string = '01-01-00';
-	export let hour: string = '1970-01-01T14:16:00.000Z';
+	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
 
 	let namePatient: string;
 	let speciality: string;
 	let token: string;
-
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
-	let formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
-
 	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
 
@@ -55,12 +53,18 @@
 
 		namePatient = firstName + ' ' + lastName;
 		speciality = doctorSpeciality;
+
 	});
 
 	$: {
 		formatedDate = new Date(date).toISOString().split('T')[0];
-		formatedHour = new Date(hour).toISOString().split('T')[1].slice(0, 5);
 	}
+
+	const loadSchedule = async (hour: number) => {
+		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
+		const result: doctor_schedule = await resp.json();
+		return result;
+	};
 </script>
 
 <tr class="hover" class:line-through={isDone}>
@@ -78,10 +82,11 @@
 		</div>
 	</td>
 	<td>
-		{new Date(hour).toISOString().split('T')[1].slice(0, 5)}
-		{parseInt(new Date(hour).toISOString().split('T')[1].slice(0, 5).split(':')[0]) > 12
-			? 'p.m.'
-			: 'a.m.'}
+		{#await loadSchedule(hour)}
+			Loading...
+		{:then data}
+			{data.schedule}
+		{/await}
 		<br />
 		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
 	</td>
@@ -118,7 +123,7 @@
 			patientName={namePatient}
 			appointmentForm={{
 				date: formatedDate,
-				hour: formatedHour,
+				hour: hour,
 				description: description,
 				id_doctor: idDoctor,
 				id_user: idUser
