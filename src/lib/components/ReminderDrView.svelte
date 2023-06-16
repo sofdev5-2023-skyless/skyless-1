@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
+	import type { doctor_schedule } from '@prisma/client';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
@@ -8,6 +9,7 @@
 	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
+	let schduleLabel :string = ''
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
 	export let patientName: string;
@@ -17,11 +19,19 @@
 
 	export let appointmentForm: Reminder = {
 		date: '',
-		hour: '',
+		hour: 0,
 		description: '',
 		id_doctor: '',
 		id_user: ''
 	};
+
+	const loadSchedule = async (hour: number) => {
+		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
+		const result: doctor_schedule = await resp.json();
+		schduleLabel = result.schedule
+		return result;
+	};
+	
 </script>
 
 <input type="checkbox" id={`my-modal-${id}`} class="modal-toggle" bind:checked={isVisible} />
@@ -39,7 +49,12 @@
 				<label class="label" for="date">Date: {appointmentForm.date}</label>
 			</div>
 			<div class="form-control">
-				<label class="label" for="hour">Hour: {appointmentForm.hour}</label>
+				{#await loadSchedule(appointmentForm.hour)}
+					Loading...
+				{/await}
+				<label class="label" for="hour">Hour: {
+				schduleLabel
+				}</label>
 			</div>
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
