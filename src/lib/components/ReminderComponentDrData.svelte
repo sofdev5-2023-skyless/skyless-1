@@ -25,19 +25,18 @@
 		token = value;
 	});
 
-	async function deleteAppointment(idAppointment: number) {
-		const response = await fetch('/api/appoinments/delete', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ id_appointment: idAppointment })
-		});
-
-		updateReminders(idUser);
-
-		return response.json();
-	}
+	async function deleteAppointment(idAppointment) {
+	const response = await fetch('/api/appoinments/delete', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ id_appointment: idAppointment })
+	});
+	const data = await response.json();
+	updateReminders(idUser);
+	return response.json();
+}
 
 	function handleShowForm() {
 		console.log('click');
@@ -53,7 +52,6 @@
 
 		namePatient = firstName + ' ' + lastName;
 		speciality = doctorSpeciality;
-
 	});
 
 	$: {
@@ -65,6 +63,20 @@
 		const result: doctor_schedule = await resp.json();
 		return result;
 	};
+
+	
+	function isPastHour(hour) {
+    const currentHour = new Date().getHours();
+    return parseInt(hour, 10) < currentHour;
+  }
+  
+  function isPastDate(date) {
+    const currentDate = new Date().setHours(0, 0, 0, 0);
+    const targetDate = new Date(date).setHours(0, 0, 0, 0);
+    return targetDate < currentDate;
+  }
+
+  
 </script>
 
 <tr class="hover" class:line-through={isDone}>
@@ -83,37 +95,60 @@
 	</td>
 	<td>
 		{#await loadSchedule(hour)}
-			Loading...
+		  Loading...
 		{:then data}
+		  {#if isPastHour(data.schedule) && isPastDate(date)}
+			<s>{data.schedule}</s>
+		  {:else}
 			{data.schedule}
+		  {/if}
 		{/await}
+
 		<br />
-		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
-	</td>
+		<span class="badge badge-ghost badge-sm">
+		  {#if isPastDate(date)}
+			<s>{new Date(date).toISOString().split('T')[0]}</s>
+		  {:else}
+			{new Date(date).toISOString().split('T')[0]}
+		  {/if}
+		</span>
+	  </td>
+	  
+	  <script>
+		function isPastHour(hour) {
+		  const currentHour = new Date().getHours();
+		  return parseInt(hour, 10) < currentHour;
+		}
+	  </script>
+	  
 	<td>{description}</td>
 	<th>
 		<button class="btn btn-primary" on:click={handleShowForm}>SHOW</button>
-		<button class=" delete-btn" on:click={() => (isConfirmationModalVisible = true)}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="icon icon-tabler icon-tabler-trash"
-				width="19"
-				height="19"
-				viewBox="0 0 24 24"
-				stroke-width="5.5"
-				stroke="#2c3e50"
-				fill="none"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path stroke="none" d="M0 0h24v24H0z" />
-				<line x1="4" y1="7" x2="20" y2="7" />
-				<line x1="10" y1="11" x2="10" y2="17" />
-				<line x1="14" y1="11" x2="14" y2="17" />
-				<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-				<path d="M9 4h6" />
-			</svg>
-		</button>
+		<button
+		class="delete-btn"
+		on:click={() => (isConfirmationModalVisible = true)}
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="icon icon-tabler icon-tabler-trash"
+			width="19"
+			height="19"
+			viewBox="0 0 24 24"
+			stroke-width="5.5"
+			stroke="#2c3e50"
+			fill="none"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		>
+			<path stroke="none" d="M0 0h24v24H0z" />
+			<line x1="4" y1="7" x2="20" y2="7" />
+			<line x1="10" y1="11" x2="10" y2="17" />
+			<line x1="14" y1="11" x2="14" y2="17" />
+			<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+			<path d="M9 4h6" />
+		</svg>
+</button>
+
 	</th>
 	{#if isVisibleForm}
 		<ReminderForm
@@ -131,65 +166,65 @@
 		/>
 	{/if}
 	{#if isConfirmationModalVisible}
+	<div
+		class="fixed z-10 inset-0 overflow-y-auto"
+		aria-labelledby="modal-title"
+		role="dialog"
+		aria-modal="true"
+	>
 		<div
-			class="fixed z-10 inset-0 overflow-y-auto"
-			aria-labelledby="modal-title"
-			role="dialog"
-			aria-modal="true"
+			class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
 		>
 			<div
-				class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+				class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+				aria-hidden="true"
+			/>
+			<span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
+				>&#8203;</span
 			>
-				<div
-					class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-					aria-hidden="true"
-				/>
-				<span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
-					>&#8203;</span
-				>
-				<div
-					class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-				>
-					<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-						<div class="sm:flex sm:items-start">
-							<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-								<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-									Confirmar eliminación
-								</h3>
-								<div class="mt-2">
-									<p class="text-sm text-gray-500">
-										¿Estás seguro de que quieres eliminar esta cita?
-									</p>
-								</div>
+			<div
+				class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+			>
+				<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+					<div class="sm:flex sm:items-start">
+						<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+							<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+								Confirmar eliminación
+							</h3>
+							<div class="mt-2">
+								<p class="text-sm text-gray-500">
+									¿Estás seguro de que quieres eliminar esta cita? La cita está programada para el {new Date(date).toLocaleDateString()}.
+								</p>
 							</div>
 						</div>
 					</div>
-					<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-						<button
-							type="button"
-							class="btn btn-primary"
-							style="margin-left: 3%;"
-							on:click={() => {
-								deleteAppointment(id_appointment);
-								isConfirmationModalVisible = false;
-							}}
-						>
-							Confirmar
-						</button>
-						<button
-							type="button"
-							class="btn btn-primary"
-							on:click={() => {
-								isConfirmationModalVisible = false;
-							}}
-						>
-							Cancelar
-						</button>
-					</div>
+				</div>
+				<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+					<button
+						type="button"
+						class="btn btn-primary"
+						style="margin-left: 3%;"
+						on:click={() => {
+							deleteAppointment(id_appointment);
+							isConfirmationModalVisible = false;
+						}}
+					>
+						Confirmar
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						on:click={() => {
+							isConfirmationModalVisible = false;
+						}}
+					>
+						Cancelar
+					</button>
 				</div>
 			</div>
 		</div>
-	{/if}
+	</div>
+{/if}
 </tr>
 
 <style>
