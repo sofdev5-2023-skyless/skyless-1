@@ -3,7 +3,6 @@
 
 	const fetchElem = async () => {
 		const { data, status } = await axios('/api/hello');
-		console.log('🚀 ~ file: FetchTest.svelte:5 ~ fetchElem ~ data:', data);
 
 		if (status == 200) {
 			return data;

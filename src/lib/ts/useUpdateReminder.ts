@@ -9,6 +9,7 @@ export const updateReminders = async (id_user: string): Promise<void> => {
 		const reminders: Reminder[] = data;
 		storeReminders.set(reminders);
 	} catch (error) {
-		if (error instanceof AxiosError) console.log(error);
+		if (error instanceof AxiosError) {
+		}
 	}
 };
