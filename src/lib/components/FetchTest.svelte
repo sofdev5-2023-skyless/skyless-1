@@ -1,6 +1,5 @@
 <script lang="ts">
 	import axios from 'axios';
-	import fetch from 'node-fetch';
 
 	const fetchElem = async () => {
 		const { data, status } = await axios('/api/hello');
