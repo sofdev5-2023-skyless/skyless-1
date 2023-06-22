@@ -7,14 +7,12 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
 	plugins: [sveltekit()],
 	test: {
-		environment: 'jsdom',
+		include: ['tests/**/*.{test,spec}.{js,ts}'],
 		globals: true,
-		setupFiles: ['tests/setupTest.ts', 'tests/mocks/setup.ts'],
-		coverage: {
-			exclude: ['tests/setupTest.ts', 'tests/mocks']
-		},
+		environment: 'jsdom',
 		deps: {
 			inline: [/msw/]
-		}
+		},
+		setupFiles: ['tests/setupTest.ts', 'tests/mocks/setup.ts']
 	}
 });

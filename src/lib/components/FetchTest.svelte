@@ -1,7 +1,20 @@
-<script>
+<script lang="ts">
+	import axios from 'axios';
+	import fetch from 'node-fetch';
+
 	const fetchElem = async () => {
-		const { json } = await fetch('/api/test');
-		const result = await json();
+		const { data, status } = await axios('/api/hello');
+		console.log('🚀 ~ file: FetchTest.svelte:5 ~ fetchElem ~ data:', data);
+
+		if (status == 200) {
+			return data;
+		}
+	};
+
+	const fetchElem2 = async () => {
+		const resp = await fetch('/api/hello');
+		const result = await resp.json();
+		console.log('🚀 ~ file: FetchTest.svelte:15 ~ fetchElem2 ~ result:', result);
 		return result;
 	};
 </script>
