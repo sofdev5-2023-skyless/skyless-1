@@ -4,7 +4,11 @@
 	import { areYouDoctor, masterKey } from '$lib/stores/store';
 	import ReminderTable from './DoctorReminderTable.svelte';
 	import { goto } from '$app/navigation';
-
+	let isFormVisible = false;
+  
+  	function toggleForm() {
+    	isFormVisible = !isFormVisible;
+  	}
 	onMount(async () => {
 		const resp = await fetch(`/api/doctors/read?id=${$masterKey}`);
 		const js = await resp.json();
