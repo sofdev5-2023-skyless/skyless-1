@@ -52,6 +52,7 @@
 
 		namePatient = firstName + ' ' + lastName;
 		speciality = doctorSpeciality;
+
 	});
 
 	$: {
@@ -63,7 +64,6 @@
 		const result: doctor_schedule = await resp.json();
 		return result;
 	};
-
 	
 	function isPastHour(hour) {
     const currentHour = new Date().getHours();
@@ -76,7 +76,7 @@
     return targetDate < currentDate;
   }
 
-  
+
 </script>
 
 <tr class="hover" class:line-through={isDone}>

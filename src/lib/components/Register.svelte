@@ -6,6 +6,7 @@
 	import type { Speciality } from '$lib/types/speciality';
 	import { onMount } from 'svelte';
 	import { ZodError } from 'zod';
+	import ErrorZod from './ErrorZod.svelte';
 
 	let isClose: boolean;
 	let specialitySelected: string;
@@ -114,11 +115,7 @@
 							<option value={id}>{name}</option>
 						{/each}
 					</select>
-					{#if errors.speciality}
-						<label for="description" class="label">
-							<span class="label-text-alt text-red-500">{messages.speciality}</span>
-						</label>
-					{/if}
+					<ErrorZod isError={errors.speciality} description={messages.speciality} />
 				</div>
 				<div class="form-element">
 					<label class="label" for="cellphone">
@@ -132,11 +129,7 @@
 						class:input-error={errors.cellphone}
 						bind:value={doctor.cellphone}
 					/>
-					{#if errors.cellphone}
-						<label for="description" class="label">
-							<span class="label-text-alt text-red-500">{messages.cellphone}</span>
-						</label>
-					{/if}
+					<ErrorZod isError={errors.cellphone} description={messages.cellphone} />
 				</div>
 				<div class="form-element">
 					<label class="label" for="ci">
@@ -150,11 +143,7 @@
 						class:input-error={errors.ci}
 						bind:value={doctor.ci}
 					/>
-					{#if errors.ci}
-						<label for="description" class="label">
-							<span class="label-text-alt text-red-500">{messages.ci}</span>
-						</label>
-					{/if}
+					<ErrorZod isError={errors.ci} description={messages.ci} />
 				</div>
 				<div class="form-element">
 					<label class="label" for="gender">
@@ -171,11 +160,7 @@
 						<option value="female">Female</option>
 						<option value="other">Other</option>
 					</select>
-					{#if errors.gender}
-						<label for="description" class="label">
-							<span class="label-text-alt text-red-500">{messages.gender}</span>
-						</label>
-					{/if}
+					<ErrorZod isError={errors.gender} description={messages.gender} />
 				</div>
 				<div class="form-element">
 					<label class="label" for="doctor-code">

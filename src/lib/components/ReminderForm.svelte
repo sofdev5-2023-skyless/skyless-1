@@ -6,6 +6,7 @@
 	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
 	import { parseDate } from '$lib/ts/parseDate';
 	import type { doctor_schedule } from '@prisma/client';
+	import ErrorZod from './ErrorZod.svelte';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -106,11 +107,7 @@
 					{/each}
 				{/await}
 			</select>
-			{#if isBadHour}
-				<label for="description" class="label">
-					<span class="label-text-alt text-red-500">{messageHour}</span>
-				</label>
-			{/if}
+			<ErrorZod isError={isBadHour} description={messageHour} />
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>
 				<textarea
@@ -120,11 +117,8 @@
 					rows="4"
 					bind:value={appointmentForm.description}
 				/>
-				{#if isBadDescription}
-					<label for="description" class="label">
-						<span class="label-text-alt text-red-500">{messageDescription}</span>
-					</label>
-				{/if}
+				<ErrorZod isError={isBadDescription} description={messageDescription} />
+
 			</div>
 
 			<div class="modal-action">
