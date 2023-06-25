@@ -1,9 +1,16 @@
 <script>
+	//import PaymentDescription from '$lib/components/PaymentDescription.svelte';
+
+	import Payment from '$lib/components/Payment.svelte';
 	import PaymentDescription from '$lib/components/PaymentDescription.svelte';
-	import StripeTest from '$lib/components/StripeTest.svelte';
 </script>
 
-<div class="mb-16 mt-16">
-	<StripeTest />
-	<!-- <PaymentDescription /> -->
-</div>
+
+<div class="mb-16 mt-20 flex w-full">
+	<div class="grid h-400 flex-grow place-items-center">
+		<Payment />
+	</div>
+	<div class="grid h-300 flex-grow place-items-center">
+		<PaymentDescription />
+	</div>
+  </div>

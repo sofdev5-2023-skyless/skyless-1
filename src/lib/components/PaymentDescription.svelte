@@ -3,31 +3,31 @@
 	import { loadDoctor, loadPatient, loadSchedule } from '$lib/ts/useLoadData';
 </script>
 
-<div class="card w-96 bg-base-100 shadow-xl">
-	<div class="card-body">
-		<h2 class="card-title">Medical Appointment</h2>
+<div style="width: 24rem; background-color: #F3F4F6;" class="shadow-xl p-6">
+	<h2 style="font-size: 1.5rem; font-weight: bold; color: #1F2937;" class="mb-4">Medical Appointment</h2>
 
-		{#await loadPatient($appointment.id_user)}
-			<p>Name's Patient: Loading...</p>
-		{:then patient}
-			<p>Name's Patient: {patient.firstName} {patient.lastName}</p>
-		{:catch error}
-			{error}
-		{/await}
+	{#await loadPatient($appointment.id_user)}
+		<p style="color: #374151;">Name's Patient: Loading...</p>
+	{:then patient}
+		<p style="color: #374151;">Name's Patient: {patient.firstName} {patient.lastName}</p>
+	{:catch error}
+		<p >{error}</p>
+	{/await}
 
-		{#await loadDoctor($appointment.id_doctor)}
-			<p>Name's Doctor: Loading...</p>
-		{:then doctor}
-			<p>Name's Doctor: Dr. {doctor.name} {doctor.lastName}</p>
-		{/await}
+	{#await loadDoctor($appointment.id_doctor)}
+		<p style="color: #374151;">Name's Doctor: Loading...</p>
+	{:then doctor}
+		<p style="color: #374151;">Name's Doctor: Dr. {doctor.name} {doctor.lastName}</p>
+	{/await}
 
-		<p>Description: {$appointment.description}</p>
-		<p>Date: {$appointment.date}</p>
+	<p style="color: #374151;">Description: {$appointment.description}</p>
+	<p style="color: #374151;">Date: {$appointment.date}</p>
 
-		{#await loadSchedule($appointment.hour)}
-			<p>Schedule: Loading...</p>
-		{:then schedule}
-			<p>Schedule: {schedule.schedule}</p>
-		{/await}
-	</div>
+	{#await loadSchedule($appointment.hour)}
+		<p style="color: #374151;">Schedule: Loading...</p>
+	{:then schedule}
+		<p style="color: #374151;">Schedule: {schedule.schedule}</p>
+	{/await}
 </div>
+
+
