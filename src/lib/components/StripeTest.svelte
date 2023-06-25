@@ -1,55 +1,60 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { loadStripe } from '@stripe/stripe-js';
-    import type { Stripe, StripeElementBase } from '@stripe/stripe-js';
-    import { CardCvc, CardExpiry, CardNumber, Elements } from 'svelte-stripe';
+	import { onMount } from 'svelte';
+	import { loadStripe } from '@stripe/stripe-js';
+	import type { Stripe, StripeCardElement } from '@stripe/stripe-js';
+	import { CardCvc, CardExpiry, CardNumber, Elements } from 'svelte-stripe';
 	import axios from 'axios';
-    // import { PUBLIC_STRIPE_KEY } from '$env/static/public'
-  let stripe: Stripe | null;
-  let cardElement: StripeElementBase;
-  let processing = false;
+	// import { PUBLIC_STRIPE_KEY } from '$env/static/public'
+	let stripe: Stripe | null;
+	let cardElement: StripeCardElement;
+	let processing = false;
+	let name: string;
 
-    const key =
-        'pk_test_51NMtdHIqt903VK65kI0YLc3OnSSXuSCrnVeELEWq4pztokDmhiTPXqjCwNHLAErAxtTzUo7P5SlWVeRivJdrqBXq00HbPQCcBb';
+	const key =
+		'pk_test_51NMtdHIqt903VK65kI0YLc3OnSSXuSCrnVeELEWq4pztokDmhiTPXqjCwNHLAErAxtTzUo7P5SlWVeRivJdrqBXq00HbPQCcBb';
 
-    onMount(async () => {
-        stripe = await loadStripe(key);
-    });
+	onMount(async () => {
+		stripe = await loadStripe(key);
+	});
 
-  async function createPaymentIntent() {
-        const response = await axios.post('/api/payment', {
-            method: 'POST',
-        });
-        const { clientSecret, message } = response.data;
-        console.log(message);
-        return clientSecret;
-    }
+	async function createPaymentIntent() {
+		const { data, status } = await axios.post('/api/stripe/payment', { name });
+		const { ok, clientSecret, message } = data;
+		if (ok) {
+			console.log(message);
+			return clientSecret;
+		}
+	}
 
-  const submit = () => {
-    if (processing) return
-    processing = true
+	const submit = async () => {
+		if (processing) return;
+		processing = true;
 
-
-  }
+		const clientSecret = await createPaymentIntent();
+		const result = await stripe?.confirmCardPayment(clientSecret, {
+			payment_method: {
+				card: cardElement
+			}
+		});
+	};
 </script>
 
-<div>
-  
-  {#if stripe }
-  <Elements stripe={stripe}>
-    <form on:submit|preventDefault={submit}>
-            <CardNumber bind:element={cardElement} />
-            <CardExpiry />
-            <CardCvc />
+<div class="container">
+	<input
+		type="text"
+		class="input input-bordered input-primary w-full max-w-xs"
+		bind:value={name}
+		placeholder="Name"
+	/>
+	{#if stripe}
+		<Elements {stripe}>
+			<form class="rounded px-8 pt-6 pb-8 mb-4" on:submit|preventDefault={submit}>
+				<CardNumber classes={{ base: 'input' }} bind:element={cardElement} />
+				<CardExpiry classes={{ base: 'input' }} />
+				<CardCvc classes={{ base: 'input' }} />
 
-            <button>Pay</button>
-        </form>
-  </Elements>
-    
-  {/if}
-
+				<button class="btn btn-primary">Pay</button>
+			</form>
+		</Elements>
+	{/if}
 </div>
-
-<body>
-    <p>Hello World</p>
-</body>
