@@ -105,6 +105,8 @@
 							<option selected value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
+				{:catch error}
+					<p>{error}</p>
 				{/await}
 			</select>
 			<ErrorZod isError={isBadHour} description={messageHour} />
@@ -118,7 +120,6 @@
 					bind:value={appointmentForm.description}
 				/>
 				<ErrorZod isError={isBadDescription} description={messageDescription} />
-
 			</div>
 
 			<div class="modal-action">

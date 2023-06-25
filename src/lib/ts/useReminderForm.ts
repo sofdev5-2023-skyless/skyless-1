@@ -1,4 +1,5 @@
 import type { Reminder } from '$lib/types/reminder';
+import axios, { AxiosError } from 'axios';
 
 const restartValues = (appointmentForm: Reminder) => {
 	appointmentForm = {
@@ -45,16 +46,18 @@ export const editAppointment = async (
 };
 
 export const updateDoctorSchedule = async (idDoctorSchedule: number, occupied: boolean = false) => {
-	const resp = await fetch(`/api/doctor_schedule/edit-state`, {
-		method: 'POST',
-		body: JSON.stringify({
+	try {
+		const { data, status } = await axios.post(`/api/doctor_schedule/edit-state`, {
 			id: idDoctorSchedule,
 			occupied: occupied ? 1 : 0
-		})
-	});
-	const result = await resp.json();
-	if (result.ok === 200) {
-		return true;
+		});
+
+		if (data.ok === 200) {
+			return true;
+		}
+		return false;
+	} catch (error) {
+		if (error instanceof AxiosError) {
+		}
 	}
-	return false;
 };

@@ -5,6 +5,7 @@
 	import type { doctor_schedule } from '@prisma/client';
 	import { updateDoctorSchedule } from '$lib/ts/useReminderForm';
 	import type { Doctor } from '$lib/types/doctor';
+	import axios from 'axios';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -20,18 +21,14 @@
 	let isConfirmationModalVisible = false;
 
 	async function deleteAppointment(idAppointment: number) {
-		const response = await fetch('/api/appoinments/delete', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ id_appointment: idAppointment })
+		const { data, status } = await axios.post('/api/appoinments/delete', {
+			id_appointment: idAppointment
 		});
 
-		updateReminders(idUser);
-		updateDoctorSchedule(hour);
+		await updateReminders(idUser);
+		await updateDoctorSchedule(hour);
 
-		return response.json();
+		return data;
 	}
 
 	function handleShowForm() {
@@ -39,16 +36,16 @@
 		isVisibleForm = !isVisibleForm;
 	}
 
-	const loadSchedule = async (hour: number) => {
-		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
-		const result: doctor_schedule = await resp.json();
-		return result;
+	const loadSchedule = async (hour: number): Promise<doctor_schedule> => {
+		const { data, status } = await axios(`/api/doctor_schedule/read?id=${hour}`);
+
+		return data;
 	};
 
-	const loadDoctor = async () => {
-		const resp = await fetch(`/api/doctors/read?id=${idDoctor}`);
-		const doctor: Doctor = await resp.json();
-		return doctor;
+	const loadDoctor = async (): Promise<Doctor> => {
+		const { data, status } = await axios(`/api/doctors/read?id=${idDoctor}`);
+
+		return data;
 	};
 
 	$: {
@@ -76,6 +73,8 @@
 				{:then { name, lastName, speciality }}
 					<div class="font-bold">Dr. {name} {lastName}</div>
 					<div class="text-sm opacity-50">{speciality}</div>
+				{:catch error}
+					<p>{error}</p>
 				{/await}
 			</div>
 		</div>
@@ -85,6 +84,8 @@
 			Loading...
 		{:then data}
 			{data.schedule}
+		{:catch error}
+			<p>{error}</p>
 		{/await}
 		<br />
 		<span class="badge badge-ghost badge-sm">{new Date(date).toISOString().split('T')[0]}</span>
@@ -92,7 +93,7 @@
 	<td>{description}</td>
 	<th>
 		<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
-		<button class=" delete-btn" on:click={() => (isConfirmationModalVisible = true)}>
+		<button class="delete-btn" on:click={() => (isConfirmationModalVisible = true)}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="icon icon-tabler icon-tabler-trash"
