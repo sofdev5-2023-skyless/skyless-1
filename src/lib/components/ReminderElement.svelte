@@ -91,7 +91,7 @@
 	</td>
 	<td>{description}</td>
 	<th>
-		<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
+		<button class="btn btn-primary" disabled on:click={handleShowForm}>Edit</button>
 		<button class="delete-btn" on:click={cancelAppointment}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
