@@ -2,10 +2,9 @@
 	import ReminderForm from './ReminderForm.svelte';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import avatar from '$lib/images/default.png';
-	import type { doctor_schedule } from '@prisma/client';
 	import { updateDoctorSchedule } from '$lib/ts/useReminderForm';
-	import type { Doctor } from '$lib/types/doctor';
 	import axios from 'axios';
+	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -36,18 +35,6 @@
 		isVisibleForm = !isVisibleForm;
 	}
 
-	const loadSchedule = async (hour: number): Promise<doctor_schedule> => {
-		const { data, status } = await axios(`/api/doctor_schedule/read?id=${hour}`);
-
-		return data;
-	};
-
-	const loadDoctor = async (): Promise<Doctor> => {
-		const { data, status } = await axios(`/api/doctors/read?id=${idDoctor}`);
-
-		return data;
-	};
-
 	$: {
 		formatedDate = new Date(date).toISOString().split('T')[0];
 	}
@@ -67,7 +54,7 @@
 				</div>
 			</div>
 			<div>
-				{#await loadDoctor()}
+				{#await loadDoctor(idDoctor)}
 					<div class="font-bold">Dr. Name Lastname</div>
 					<div class="text-sm opacity-50">Speciality</div>
 				{:then { name, lastName, speciality }}

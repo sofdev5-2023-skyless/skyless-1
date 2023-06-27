@@ -7,6 +7,8 @@
 	import { parseDate } from '$lib/ts/parseDate';
 	import type { doctor_schedule } from '@prisma/client';
 	import ErrorZod from './ErrorZod.svelte';
+	import { goto } from '$app/navigation';
+	import { appointment } from '$lib/stores/store';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -44,9 +46,10 @@
 			} else {
 				appointmentForm.id_doctor = id;
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
-				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
-				isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
-				await updateDoctorSchedule(appointmentForm.hour, true);
+				const appointmentParsed: Reminder = appointmentSchema.parse(appointmentForm);
+				appointment.set(appointmentParsed);
+				goto('/payment');
+				isVisible = false;
 			}
 		} catch (error) {
 			if (error instanceof ZodError) {
@@ -78,7 +81,7 @@
 	<div class="modal-box relative">
 		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
 		>
-		<form on:submit={handleSubmit}>
+		<form on:submit|preventDefault={handleSubmit} method="post">
 			<h1>{id}</h1>
 			<h1 class="title">Book Medical Appointment</h1>
 			<div class="form-control">

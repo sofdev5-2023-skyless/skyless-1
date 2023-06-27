@@ -9,7 +9,7 @@
 	import MedicalCheckLogo from '$lib/images/MedicalCheckLogo.png';
 </script>
 
-<footer class="footer z-50 w-auto bg-base-300 text-base-content">
+<footer style="margin-top: auto;" class="footer z-50 w-auto bg-base-300 text-base-content">
 	<div class="mx-auto w-full max-w-screen-xl p-6 py-6 lg:py-8">
 		<div class="grid grid-cols-3 gap-72 sm:gap-x-72 sm:grid-cols-3">
 			<div class="p-5">
