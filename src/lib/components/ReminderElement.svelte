@@ -13,6 +13,7 @@
 	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
+	export let id_payment: string;
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
 	let currentDate = new Date();
@@ -22,14 +23,15 @@
 	let isConfirmationModalVisible = false;
 	let isAlreadyStarted = false;
 
-	async function deleteAppointment(idAppointment: number) {
+	async function deleteAppointment(idAppointment: number, idPayment: string) {
 		const { data, status } = await axios.post('/api/appoinments/delete', {
 			id_appointment: idAppointment
 		});
-
+		await axios.post('/api/stripe/refund', {
+			payment_intent: idPayment
+		});
 		await updateReminders(idUser);
 		await updateDoctorSchedule(hour);
-
 		return data;
 	}
 
@@ -175,7 +177,7 @@
 							class="btn btn-primary"
 							style="margin-left: 3%;"
 							on:click={() => {
-								deleteAppointment(id_appointment);
+								deleteAppointment(id_appointment,id_payment);
 								isConfirmationModalVisible = false;
 							}}
 						>
