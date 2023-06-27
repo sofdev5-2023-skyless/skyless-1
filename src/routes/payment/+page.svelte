@@ -6,11 +6,12 @@
 </script>
 
 
-<div class="mb-16 mt-20 flex w-full">
+<div class="mb-16 mt-20 flex w-full justify-center items-center">
 	<div class="grid h-400 flex-grow place-items-center">
-		<Payment />
+	  <Payment />
 	</div>
 	<div class="grid h-300 flex-grow place-items-center">
-		<PaymentDescription />
+	  <PaymentDescription />
 	</div>
   </div>
+  

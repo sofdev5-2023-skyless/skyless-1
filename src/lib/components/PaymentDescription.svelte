@@ -3,31 +3,31 @@
 	import { loadDoctor, loadPatient, loadSchedule } from '$lib/ts/useLoadData';
 </script>
 
-<div style="width: 24rem; background-color: #F3F4F6;" class="shadow-xl p-6">
-	<h2 style="font-size: 1.5rem; font-weight: bold; color: #1F2937;" class="mb-4">Medical Appointment</h2>
-
+<div class="shadow-xl p-6">
+	<h2 class="mt-10 card-title justify-center">Medical Appointment</h2>
+  
 	{#await loadPatient($appointment.id_user)}
-		<p style="color: #374151;">Name's Patient: Loading...</p>
+	  <p class="mb-2 font-bold">Name's Patient: Loading...</p>
 	{:then patient}
-		<p style="color: #374151;">Name's Patient: {patient.firstName} {patient.lastName}</p>
+	  <p class="mb-2 "><span class="font-bold">Name's Patient:</span> {patient.firstName} {patient.lastName}</p>
 	{:catch error}
-		<p >{error}</p>
+	  <p class="mb-2 text-red-500">{error}</p>
 	{/await}
-
+  
 	{#await loadDoctor($appointment.id_doctor)}
-		<p style="color: #374151;">Name's Doctor: Loading...</p>
+	  <p class="mb-2 font-bold">Name's Doctor: Loading...</p>
 	{:then doctor}
-		<p style="color: #374151;">Name's Doctor: Dr. {doctor.name} {doctor.lastName}</p>
+	  <p class="mb-2 "> <span class="font-bold">Name's Doctor:</span> Dr. {doctor.name} {doctor.lastName}</p>
 	{/await}
-
-	<p style="color: #374151;">Description: {$appointment.description}</p>
-	<p style="color: #374151;">Date: {$appointment.date}</p>
-
+  
+	<p class="mb-2"> <span class="font-bold">Description:</span> {$appointment.description}</p>
+	<p class="mb-2 font-bold">Date: {$appointment.date}</p>
+  
 	{#await loadSchedule($appointment.hour)}
-		<p style="color: #374151;">Schedule: Loading...</p>
+	  <p class="mb-2 font-bold">Schedule: Loading...</p>
 	{:then schedule}
-		<p style="color: #374151;">Schedule: {schedule.schedule}</p>
+	  <p class="mb-2"><span class="font-bold">Schedule:</span> {schedule.schedule}</p>
 	{/await}
-</div>
-
+  </div>
+  
 
