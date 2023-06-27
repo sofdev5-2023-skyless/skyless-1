@@ -52,6 +52,8 @@
 				card: cardElement
 			}
 		});
+		
+		appointmentForm.id_payment = clientSecret;
 
 		await createAppoinment(true, appointmentForm, appointmentForm);
 		await updateDoctorSchedule($appointment.hour, true);
