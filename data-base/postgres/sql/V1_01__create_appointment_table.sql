@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS bd_schema.appointment_form (
        description text NOT NULL,
        date date NOT NULL,
        id_doctor text NOT NULL,
-       id_user text NOT NULL
+       id_user text NOT NULL,
+       id_transaction text NOT NULL
 ) TABLESPACE pg_default;
