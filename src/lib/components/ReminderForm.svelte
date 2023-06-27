@@ -46,13 +46,10 @@
 			} else {
 				appointmentForm.id_doctor = id;
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
-				appointment.set(appointmentForm);
+				const appointmentParsed: Reminder = appointmentSchema.parse(appointmentForm);
+				appointment.set(appointmentParsed);
 				goto('/payment');
-				// console.log(window.location);
-				// TODO: Move
-				// const appointment: Reminder = appointmentSchema.parse(appointmentForm);
-				// isVisible = await createAppoinment(isVisible, appointment, appointmentForm);
-				// await updateDoctorSchedule(appointmentForm.hour, true);
+				isVisible = false;
 			}
 		} catch (error) {
 			if (error instanceof ZodError) {
@@ -67,7 +64,6 @@
 				});
 			}
 		}
-		isVisible = false;
 	};
 
 	const loadSchedules = async () => {
