@@ -53,7 +53,7 @@
 			}
 		});
 		
-		appointmentForm.id_payment = clientSecret;
+		appointmentForm.id_transaction = clientSecret;
 
 		await createAppoinment(true, appointmentForm, appointmentForm);
 		await updateDoctorSchedule($appointment.hour, true);

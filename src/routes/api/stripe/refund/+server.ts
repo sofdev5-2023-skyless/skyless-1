@@ -10,10 +10,10 @@ const stripe = new Stripe(key, {
 });
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
-    const { id_payment } = await request.json();
+    const { id_transaction } = await request.json();
 
     const refund = await stripe.refunds.create({
-        payment_intent: id_payment,
+        payment_intent: id_transaction,
     });
 
     console.log(refund);
