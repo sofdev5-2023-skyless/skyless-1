@@ -26,8 +26,8 @@ const config = {
 
 	plugins: [require('daisyui'), require('flowbite/plugin')],
 	daisyui: {
-    themes: ["pastel"],
-  },
+		themes: ['pastel']
+	}
 };
 
 module.exports = config;
