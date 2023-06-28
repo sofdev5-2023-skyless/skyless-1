@@ -50,6 +50,8 @@
 				card: cardElement
 			}
 		});
+		
+		appointmentForm.id_transaction = result!.paymentIntent!.id;
 
 		await createAppoinment(true, appointmentForm, appointmentForm);
 		await updateDoctorSchedule($appointment.hour, true);

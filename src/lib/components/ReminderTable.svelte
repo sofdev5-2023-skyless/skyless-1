@@ -32,7 +32,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each reminders as { date, description, id_doctor, id_user, hour, id_appointment } (id_appointment)}
+					{#each reminders as { date, description, id_doctor, id_user, hour, id_appointment, id_transaction } (id_appointment)}
 						<ReminderElement
 							{id_appointment}
 							{date}
@@ -40,6 +40,7 @@
 							{hour}
 							idDoctor={id_doctor}
 							idUser={id_user}
+							id_transaction={id_transaction}
 						/>
 					{/each}
 				</tbody>
