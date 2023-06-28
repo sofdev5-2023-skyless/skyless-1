@@ -4,25 +4,23 @@ const config = {
 		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
 
-	theme: {
-		extend: {
-			colors: {
-				// flowbite-svelte
-				primary: {
-					50: '#ebf5ff',
-					100: '#fff1ee',
-					200: '#ffe4de',
-					300: '#ffd5cc',
-					400: '#ffbcad',
-					500: '#fe795d',
-					600: '#ef562f',
-					700: '#eb4f27',
-					800: '#d3330a',
-					900: '#d3330a'
-				}
-			}
-		}
-	},
+	daisyui: {
+		themes: [
+		  {
+			mytheme: {
+   				"primary": "#d1c1d7",
+   				"secondary": "#f6cbd1",
+   				"accent": "#b4e9d6",
+   				"neutral": "#70acc7",
+   				"base-100": "#ffffff",
+   				"info": "#3abff8",
+   				"success": "#36d399",
+   				"warning": "#fbbd23",
+				"error": "#f87272",
+			},
+		  },
+		],
+	  },
 
 	plugins: [require('daisyui'), require('flowbite/plugin')],
 	daisyui: {
