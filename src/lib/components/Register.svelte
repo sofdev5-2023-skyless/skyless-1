@@ -7,6 +7,8 @@
 	import { onMount } from 'svelte';
 	import { ZodError } from 'zod';
 	import ErrorZod from './ErrorZod.svelte';
+	import { loadPatient } from '$lib/ts/useLoadData';
+	import axios from 'axios';
 
 	let isClose: boolean;
 	let specialitySelected: string;
@@ -29,13 +31,11 @@
 		console.log('click');
 
 		if (doctorCode === 1234) {
-			const resp = await fetch(`/api/patients/read?id=${key}&token=${token}`);
-			const js = await resp.json();
-			const { id, firstName, lastName, email } = js;
+			const { id, firstName, lastName, email } = await loadPatient(key);
 
 			doctor.lastName = lastName;
 			doctor.name = firstName;
-			doctor.email = email;
+			doctor.email = email ?? 'example@gmail.com';
 			doctor.speciality = specialitySelected;
 			doctor.id = id;
 			doctor.gender = genderSelected;
@@ -44,21 +44,12 @@
 				const result = doctorSchema.parse(doctor);
 				console.log(result);
 
-				await fetch('/api/doctors/create', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(result)
-				});
+				await axios.post('/api/doctors/create', result);
 
-				await fetch('/api/group/add', {
-					method: 'POST',
-					body: JSON.stringify({
-						token: token,
-						idUser: id,
-						groupName: 'doctor'
-					})
+				await axios.post('/api/group/add', {
+					token: token,
+					idUser: id,
+					groupName: 'doctor'
 				});
 
 				cleanAll();
@@ -68,14 +59,12 @@
 				cleanError(errors);
 				cleanMessage(messages);
 				if (error instanceof ZodError) {
-					console.log(error);
+					console.log('🚀 ~ file: Register.svelte:70 ~ handleSubmit ~ error:', error);
 
 					error.issues.forEach((err) => {
 						errors[err.path[0] as keyof typeof errors] = true;
 						messages[err.path[0] as keyof typeof messages] = err.message;
 					});
-					console.log(errors);
-					console.log(messages);
 				}
 			}
 		}
@@ -110,7 +99,7 @@
 						class:select-error={errors.speciality}
 						bind:value={specialitySelected}
 					>
-						<option disabled selected>Pick one</option>
+						<option disabled selected>Pick one speciality</option>
 						{#each specialities as { id, name } (id)}
 							<option value={id}>{name}</option>
 						{/each}
