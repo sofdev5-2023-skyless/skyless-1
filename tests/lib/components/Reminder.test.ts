@@ -25,9 +25,7 @@ describe('Test to prove API', () => {
 		const button = screen.getByRole('button', { name: '' });
 
 		await fireEvent.click(button);
-		expect(screen.getByText('¿Estás seguro de que quieres eliminar esta cita?')).toBeDefined();
-
-		const buttonConfirm = screen.getByRole('button', { name: 'Confirmar' });
-		await fireEvent.click(buttonConfirm);
+		expect(screen.getByText('The appointment cannot be canceled once started')).toBeDefined();
+		screen.debug();
 	});
 });
