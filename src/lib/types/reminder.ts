@@ -5,5 +5,5 @@ export interface Reminder {
 	description: string;
 	id_doctor: string;
 	id_user: string;
-	id_payment: string;
+	id_transaction: string;
 }

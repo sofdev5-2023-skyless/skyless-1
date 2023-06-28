@@ -13,7 +13,7 @@
 	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
-	export let id_payment: string;
+	export let id_transaction: string;
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
 	let currentDate = new Date();
@@ -177,7 +177,7 @@
 							class="btn btn-primary"
 							style="margin-left: 3%;"
 							on:click={() => {
-								deleteAppointment(id_appointment,id_payment);
+								deleteAppointment(id_appointment,id_transaction);
 								isConfirmationModalVisible = false;
 							}}
 						>
