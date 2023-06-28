@@ -57,11 +57,11 @@
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal">
-			<li tabindex="0">
+			<li>
 				<a href="/doctor-list"> View all doctors</a>
 			</li>
-			<li tabindex="0">
-				<a> About us </a>
+			<li>
+				<a href="/about-us"> About us </a>
 			</li>
 		</ul>
 	</div>
