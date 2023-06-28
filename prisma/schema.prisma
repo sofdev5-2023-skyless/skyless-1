@@ -14,7 +14,7 @@ model appointment_form {
   id_doctor       String
   id_user         String
   id_transaction  String
-  hour            Int
+  hour            Int?
   doctor_schedule doctor_schedule? @relation(fields: [hour], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hour")
 }
 
@@ -39,9 +39,16 @@ model speciality {
 }
 
 model doctor_schedule {
-  id               Int                @id
-  id_doctor        String
-  schedule         String             @db.VarChar(255)
-  occupied         Boolean
-  appointment_form appointment_form[]
+  id                                          Int                @id @default(autoincrement())
+  id_doctor                                   String
+  schedule                                    String             @db.VarChar(255)
+  occupied                                    Boolean
+  appointment_form                            appointment_form[]
+  schedule_doctor_schedule_scheduleToschedule schedule           @relation("doctor_schedule_scheduleToschedule", fields: [schedule], references: [id_schedule], onDelete: NoAction, onUpdate: NoAction, map: "fk_schedule")
+}
+
+model schedule {
+  id_schedule                                        String            @id
+  schedule                                           String            @db.VarChar(255)
+  doctor_schedule_doctor_schedule_scheduleToschedule doctor_schedule[] @relation("doctor_schedule_scheduleToschedule")
 }
