@@ -14,7 +14,7 @@ model appointment_form {
   id_doctor       String
   id_user         String
   id_transaction  String
-  hour            Int?
+  hour            Int
   doctor_schedule doctor_schedule? @relation(fields: [hour], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hour")
 }
 
