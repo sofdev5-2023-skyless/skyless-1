@@ -17,7 +17,7 @@
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
 	let currentDate = new Date();
-	let currentHour = currentDate.toLocaleTimeString([], {hour: 'numeric', hour12: false});
+	let currentHour = currentDate.toLocaleTimeString([], { hour: 'numeric', hour12: false });
 
 	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
@@ -41,12 +41,12 @@
 	}
 
 	function cancelAppointment() {
-		if (currentDate >= new Date(date) && (parseInt(currentHour, 10)+1) >= hour) {
+		if (currentDate >= new Date(date) && parseInt(currentHour, 10) + 1 >= hour) {
 			isAlreadyStarted = true;
 		} else {
 			isAlreadyStarted = false;
 		}
-		isConfirmationModalVisible = true
+		isConfirmationModalVisible = true;
 	}
 
 	$: {
@@ -105,7 +105,12 @@
 				stroke="#2c3e50"
 				fill="none"
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="5" d="M6 18L18 6M6 6l12 12" />
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="5"
+					d="M6 18L18 6M6 6l12 12"
+				/>
 			</svg>
 		</button>
 	</th>
@@ -146,43 +151,43 @@
 					<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 						<div class="sm:flex sm:items-start">
 							{#if !isAlreadyStarted}
-							<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-								<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-									Confirm cancellation
-								</h3>
-								<div class="mt-2">
-									<p class="text-sm text-gray-500">
-										Are you sure you want to cancel this appointment?
-									</p>
+								<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+									<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+										Confirm cancellation
+									</h3>
+									<div class="mt-2">
+										<p class="text-sm text-gray-500">
+											Are you sure you want to cancel this appointment?
+										</p>
+									</div>
 								</div>
-							</div>
 							{:else}
-							<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-								<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-									Already started
-								</h3>
-								<div class="mt-2">
-									<p class="text-sm text-gray-500">
-										The appointment cannot be canceled once started
-									</p>
+								<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+									<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+										Already started
+									</h3>
+									<div class="mt-2">
+										<p class="text-sm text-gray-500">
+											The appointment cannot be canceled once started
+										</p>
+									</div>
 								</div>
-							</div>
 							{/if}
 						</div>
 					</div>
 					<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
 						{#if !isAlreadyStarted}
-						<button
-							type="button"
-							class="btn btn-primary"
-							style="margin-left: 3%;"
-							on:click={() => {
-								deleteAppointment(id_appointment,id_transaction);
-								isConfirmationModalVisible = false;
-							}}
-						>
-							Yes
-						</button>
+							<button
+								type="button"
+								class="btn btn-primary"
+								style="margin-left: 3%;"
+								on:click={() => {
+									deleteAppointment(id_appointment, id_transaction);
+									isConfirmationModalVisible = false;
+								}}
+							>
+								Yes
+							</button>
 						{/if}
 						<button
 							type="button"
@@ -191,12 +196,11 @@
 								isConfirmationModalVisible = false;
 							}}
 						>
-						{#if !isAlreadyStarted}
-							No
-						{:else}
-							Ok
-						{/if}
-							
+							{#if !isAlreadyStarted}
+								No
+							{:else}
+								Ok
+							{/if}
 						</button>
 					</div>
 				</div>

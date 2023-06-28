@@ -4,7 +4,8 @@ import type { Reminder } from '$lib/types/reminder';
 import { prisma } from '$lib/database/prisma';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
-	const { date, description, hour, id_doctor, id_user, id_transaction }: Reminder = await request.json();
+	const { date, description, hour, id_doctor, id_user, id_transaction }: Reminder =
+		await request.json();
 
 	const results = await prisma.appointment_form.create({
 		data: {

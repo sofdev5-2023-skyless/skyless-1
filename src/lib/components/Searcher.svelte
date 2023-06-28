@@ -54,12 +54,12 @@
 </div>
 
 {#if actualIsSearch}
-		<div>
-			<DoctorList
-				{actualIsSearch}
-				isOpen={true}
-				specialityName={`Results for: "${nameDoctor}"`}
-				{doctors}
-			/>
-		</div>
+	<div>
+		<DoctorList
+			{actualIsSearch}
+			isOpen={true}
+			specialityName={`Results for: "${nameDoctor}"`}
+			{doctors}
+		/>
+	</div>
 {/if}

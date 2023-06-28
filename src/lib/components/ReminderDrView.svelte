@@ -9,7 +9,7 @@
 	export let id = '';
 	let isBadDescription: boolean = false;
 	let messageDescription: string = '';
-	let schduleLabel :string = ''
+	let schduleLabel: string = '';
 	export let isVisible: boolean = false;
 	export let isEdit: boolean = false;
 	export let patientName: string;
@@ -28,10 +28,9 @@
 	const loadSchedule = async (hour: number) => {
 		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
 		const result: doctor_schedule = await resp.json();
-		schduleLabel = result.schedule
+		schduleLabel = result.schedule;
 		return result;
 	};
-	
 </script>
 
 <input type="checkbox" id={`my-modal-${id}`} class="modal-toggle" bind:checked={isVisible} />
@@ -52,9 +51,7 @@
 				{#await loadSchedule(appointmentForm.hour)}
 					Loading...
 				{/await}
-				<label class="label" for="hour">Hour: {
-				schduleLabel
-				}</label>
+				<label class="label" for="hour">Hour: {schduleLabel}</label>
 			</div>
 			<div class="form-control">
 				<label for="description" class="label">Descripción:</label>

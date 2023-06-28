@@ -40,7 +40,7 @@
 							{hour}
 							idDoctor={id_doctor}
 							idUser={id_user}
-							id_transaction={id_transaction}
+							{id_transaction}
 						/>
 					{/each}
 				</tbody>
