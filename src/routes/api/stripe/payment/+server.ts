@@ -1,10 +1,9 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler, RequestEvent } from '../../login/$types';
 import Stripe from 'stripe';
+import { env } from '$env/dynamic/private';
 
-const key =
-	'sk_test_51NMtdHIqt903VK65FXYQmEuVFAQfAwmS5c8fajrCIgbcWP1tIjyhodo2gXVTalDjyPhWMxk2zgR61ikQJG40SrqV00uoDxU814';
-const stripe = new Stripe(key, {
+const stripe = new Stripe(env.PRIVATE_KEY_STRIPE, {
 	apiVersion: '2022-11-15'
 });
 
@@ -13,8 +12,7 @@ const createPayment = async (name: string, amount: number = 50) => {
 		const paymentIntent = await stripe.paymentIntents.create({
 			amount: amount * 100,
 			currency: 'usd',
-			payment_method_types: ['card'],
-			
+			payment_method_types: ['card']
 		});
 		return { clientSecret: paymentIntent.client_secret, ok: true };
 	} catch (error) {

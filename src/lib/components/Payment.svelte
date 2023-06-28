@@ -12,7 +12,8 @@
 	import type { Reminder } from '$lib/types/reminder';
 	import { goto } from '$app/navigation';
 	import { loadPatient } from '$lib/ts/useLoadData';
-	// import { PUBLIC_STRIPE_KEY } from '$env/static/public'
+	import { env } from '$env/dynamic/public';
+
 	let stripe: Stripe | null;
 	let cardElement: StripeCardElement;
 	let processing = false;
@@ -23,11 +24,8 @@
 	appointment.subscribe((value) => (appointmentForm = value));
 	masterKey.subscribe((value) => (patientId = value));
 
-	const key =
-		'pk_test_51NMtdHIqt903VK65kI0YLc3OnSSXuSCrnVeELEWq4pztokDmhiTPXqjCwNHLAErAxtTzUo7P5SlWVeRivJdrqBXq00HbPQCcBb';
-
 	onMount(async () => {
-		stripe = await loadStripe(key);
+		stripe = await loadStripe(env.PUBLIC_KEY_STRIPE);
 	});
 
 	async function createPaymentIntent() {
