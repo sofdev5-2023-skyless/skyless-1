@@ -124,7 +124,8 @@
 				hour: hour,
 				description: description,
 				id_doctor: idDoctor,
-				id_user: idUser
+				id_user: idUser,
+				id_transaction
 			}}
 		/>
 	{/if}
