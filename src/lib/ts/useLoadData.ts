@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { doctor_schedule } from '@prisma/client';
 import { masterToken } from '$lib/stores/store';
 import type { Client } from '$lib/types/client';
+import Registry from './registry';
 
 export const loadSchedule = async (hour: number): Promise<doctor_schedule> => {
 	const { data, status } = await axios(`/api/doctor_schedule/read?id=${hour}`);
@@ -17,8 +18,11 @@ export const loadDoctor = async (idDoctor: string): Promise<Doctor> => {
 };
 
 export const loadPatient = async (idPatient: string): Promise<Client> => {
-	let token = localStorage.getItem('token') ?? 'key-default';
+	const user = Registry.auth?.getClient().tokenParsed;
 
-	const { data, status } = await axios(`/api/patients/read?id=${idPatient}&token=${token}`);
-	return data;
+	return {
+		email: user?.email ?? 'example@gmail.com',
+		firstName: user?.given_name ?? 'FirstName',
+		lastName: user?.family_name ?? 'Lastname'
+	};
 };

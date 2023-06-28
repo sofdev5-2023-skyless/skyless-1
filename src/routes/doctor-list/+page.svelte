@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import Searcher from '$lib/components/Searcher.svelte';
 	import { isSearch } from '$lib/stores/store';
+	import { browser } from '$app/environment';
+	import Registry from '$lib/ts/registry';
 
 	let specilities: Speciality[] = [];
 	let actualIsSearch: boolean;
@@ -25,7 +27,7 @@
 	{#if !actualIsSearch}
 		{#each specilities as { id, name } (id)}
 			<DoctorList
-				isOpen={true}
+				isOpen={id[id.length - 1] <= '1'}
 				specialityName={name}
 				specialityPath={`/api/doctors/speciality?id=${id}`}
 			/>

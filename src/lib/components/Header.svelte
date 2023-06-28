@@ -1,12 +1,45 @@
 <script lang="ts">
 	import LoginIcon from '../../icons/LoginIcon.svelte';
 	import MedicalCheckLogo from '$lib/images/MedicalCheckLogo.png';
-	import { areYouDoctor, masterKey } from '$lib/stores/store';
+	import { areYouDoctor, masterKey, masterToken, menuOpen } from '$lib/stores/store';
 	import DropdownMenu from './DropdownMenu.svelte';
+	import { browser } from '$app/environment';
+	import Registry from '$lib/ts/registry';
+	import { onMount, tick } from 'svelte';
 
 	let id: string;
+	let isLogOut: boolean = false;
+
 	masterKey.subscribe((value) => (id = value));
 	$: id;
+	$: isLogOut;
+
+	const handleLogOut = async () => {
+		if (isLogOut) return;
+		isLogOut = true;
+		if (browser) {
+			localStorage.removeItem('key');
+			localStorage.removeItem('token');
+			masterKey.update((value) => (value = 'key-default'));
+			masterToken.update((value) => (value = 'token-default'));
+			menuOpen.set(false);
+			await Registry.auth?.getClient().logout({ redirectUri: `${location.origin}` });
+		}
+		isLogOut = false;
+	};
+
+	onMount(() => {
+		if (browser) {
+			const key = localStorage.getItem('key');
+			const token = localStorage.getItem('token');
+
+			if (key != null && token != null) {
+				masterKey.set(key ?? 'key-layout');
+				masterToken.set(token ?? 'token-layout');
+				menuOpen.set(true);
+			}
+		}
+	});
 </script>
 
 <nav class="fixed top-0 z-59 w-full navbar bg-base-100">
@@ -34,15 +67,15 @@
 	</div>
 	<div class="navbar-end">
 		{#if id.length <= 11}
-			<a class="btn btn-ghost" href="/login">
+			<a class="btn btn-primary" href="/login">
 				<LoginIcon />
 				&nbsp; Login
 			</a>
 		{:else}
-			<a class="btn btn-ghost" href="/logout">
+			<button class="btn btn-primary" class:loading={isLogOut} on:click={handleLogOut}>
 				<LoginIcon />
-				&nbsp; Logout
-			</a>
+				Logout
+			</button>
 		{/if}
 	</div>
 </nav>
