@@ -2,9 +2,10 @@
 	import { onMount } from 'svelte';
 	import ReminderForm from './ReminderDrView.svelte';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
-	import { masterToken, masterKey } from '$lib/stores/store';
+	import { masterToken } from '$lib/stores/store';
 	import avatar from '$lib/images/default.png';
 	import type { doctor_schedule } from '@prisma/client';
+	import axios from 'axios';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -25,17 +26,12 @@
 		token = value;
 	});
 
-	async function deleteAppointment(idAppointment) {
-		const response = await fetch('/api/appoinments/delete', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ id_appointment: idAppointment })
+	async function deleteAppointment(idAppointment: number) {
+		const { data, status } = await axios.post('/api/appoinments/delete', {
+			id_appointment: idAppointment
 		});
-		const data = await response.json();
 		updateReminders(idUser);
-		return response.json();
+		return data;
 	}
 
 	function handleShowForm() {
@@ -64,12 +60,12 @@
 		return result;
 	};
 
-	function isPastHour(hour) {
+	function isPastHour(hour: string) {
 		const currentHour = new Date().getHours();
 		return parseInt(hour, 10) < currentHour;
 	}
 
-	function isPastDate(date) {
+	function isPastDate(date: string) {
 		const currentDate = new Date().setHours(0, 0, 0, 0);
 		const targetDate = new Date(date).setHours(0, 0, 0, 0);
 		return targetDate < currentDate;
@@ -154,7 +150,8 @@
 				hour: hour,
 				description: description,
 				id_doctor: idDoctor,
-				id_user: idUser
+				id_user: idUser,
+				id_transaction: ''
 			}}
 		/>
 	{/if}
