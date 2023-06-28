@@ -1,10 +1,20 @@
 <script>
-	import { browser } from '$app/environment';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import SideMenu from '$lib/components/SideMenu.svelte';
-	import { menuOpen } from '$lib/stores/store';
 	import '../app.postcss';
+	import Registry from '$lib/ts/registry';
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		const key = localStorage.getItem('key');
+		const token = localStorage.getItem('token');
+
+		if (key != null && token != null) {
+			Registry.auth?.getClient().init({
+				onLoad: 'login-required'
+			});
+		}
+	});
 </script>
 
 <div class="flex flex-col min-h-screen">
