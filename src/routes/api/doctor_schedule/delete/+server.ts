@@ -1,18 +1,17 @@
 import { json } from '@sveltejs/kit';
 import type { RequestEvent, RequestHandler } from '../$types';
 import { prisma } from '$lib/database/prisma';
-import type { doctor_schedule } from '@prisma/client';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
-	const { id_doctor, schedule }: doctor_schedule = await request.json();
-	const result = await prisma.doctor_schedule.create({
-		data: {
-			id_doctor,
-			occupied: false,
-			schedule
+	const { id }: { id: number } = await request.json();
+	const result = await prisma.doctor_schedule.delete({
+		where: {
+			id: id
 		}
 	});
-	if (result.id_doctor == id_doctor) {
+
+	await prisma.$disconnect();
+	if (id === result.id) {
 		return json({ ok: 200 });
 	}
 	return json({ ok: 400 });

@@ -1,6 +1,6 @@
 import type { Doctor } from '$lib/types/doctor';
 import axios from 'axios';
-import type { doctor_schedule } from '@prisma/client';
+import type { doctor_schedule, schedule } from '@prisma/client';
 import { masterToken, masterKey } from '$lib/stores/store';
 import type { Client } from '$lib/types/client';
 import Registry from './registry';
@@ -27,4 +27,14 @@ export const loadPatient = async (idPatient: string): Promise<Client> => {
 		lastName: user?.family_name ?? 'Lastname',
 		id: id ?? 'key-default'
 	};
+};
+
+export const loadDoctorSchedules = async (id_doctor: string): Promise<doctor_schedule[]> => {
+	const { data, status } = await axios(`/api/doctor_schedule/read-doctor?id=${id_doctor}`);
+	return data;
+};
+
+export const loadSchedules = async (): Promise<schedule[]> => {
+	const { data, status } = await axios<schedule[]>('/api/schedule');
+	return data;
 };
