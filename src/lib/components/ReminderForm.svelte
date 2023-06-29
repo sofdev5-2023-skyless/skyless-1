@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
+	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
@@ -32,6 +33,8 @@
 		id_doctor: '',
 		id_user: ''
 	};
+
+	const a = loadSchedule(appointmentForm.hour);
 
 	const handleSubmit = async () => {
 		try {
@@ -99,15 +102,12 @@
 			</div>
 			<select class="select select-bordered w-full max-w-xs" bind:value={appointmentForm.hour}>
 				{#await loadSchedules()}
-					<option value="">Loading...</option>
+					<option selected value="">Loading...</option>
 				{:then schedules}
+					<option disabled selected value={0}>Select a schedule available</option>
 					{#each schedules as schedule (schedule.id)}
-						<option disabled selected value={0}>Select a schedule available</option>
 						{#if !schedule.occupied}
 							<option value={schedule.id}>{schedule.schedule}</option>
-						{/if}
-						{#if isEdit}
-							<option selected value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
 				{:catch error}
