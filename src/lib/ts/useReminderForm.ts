@@ -1,5 +1,6 @@
 import type { Reminder } from '$lib/types/reminder';
 import axios, { AxiosError } from 'axios';
+import toast from 'svelte-french-toast'
 
 const restartValues = (appointmentForm: Reminder) => {
 	appointmentForm = {
@@ -41,7 +42,12 @@ export const editAppointment = async (
 
 	if (js.status == 200) {
 		isVisible = restartValues(appointmentForm);
-	}
+	} 
+	toast.promise(Promise.resolve(js.status == 200), {
+		loading: 'Saving...',
+		success:'Changes saved successfully!',
+		error: 'Could not save changes',
+	  });
 	return isVisible;
 };
 

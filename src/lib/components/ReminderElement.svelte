@@ -6,6 +6,8 @@
 	import axios from 'axios';
 	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 	import { isVisibleEditForm } from '$lib/stores/store';
+	import toast from 'svelte-french-toast'
+	import {Toaster} from 'svelte-french-toast'
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -67,6 +69,8 @@
 		formatedDate = new Date(date).toISOString().split('T')[0];
 	}
 </script>
+
+<Toaster position="top-center"/>
 
 <tr class="hover" class:line-through={isDone}>
 	<th>
