@@ -8,7 +8,7 @@
 	import type { doctor_schedule } from '@prisma/client';
 	import ErrorZod from './ErrorZod.svelte';
 	import { goto } from '$app/navigation';
-	import { appointment } from '$lib/stores/store';
+	import { appointment, isVisibleEditForm } from '$lib/stores/store';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -42,7 +42,9 @@
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await editAppointment(isVisible, appointment, appointmentForm);
 				console.log(isVisible);
+				isVisibleEditForm.set(false);
 				await updateReminders(appointment.id_user);
+				await updateDoctorSchedule(appointment.hour);
 			} else {
 				appointmentForm.id_doctor = id;
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
@@ -79,7 +81,7 @@
 
 <div class="modal">
 	<div class="modal-box relative">
-		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
+		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2" >✕</label
 		>
 		<form on:submit|preventDefault={handleSubmit} method="post">
 			<h1>{id}</h1>

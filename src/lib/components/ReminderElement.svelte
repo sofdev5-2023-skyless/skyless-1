@@ -5,6 +5,7 @@
 	import { updateDoctorSchedule } from '$lib/ts/useReminderForm';
 	import axios from 'axios';
 	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
+	import { isVisibleEditForm } from '$lib/stores/store';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -13,15 +14,16 @@
 	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
-	export let id_transaction: string;
+	export let id_transaction: string = '';
 
 	let formatedDate: string = new Date(date).toISOString().split('T')[0];
 	let currentDate = new Date();
-	let currentHour = currentDate.toLocaleTimeString([], { hour: 'numeric', hour12: false });
+	let currentHour = currentDate.getHours();
 
 	let isVisibleForm: boolean;
 	let isConfirmationModalVisible = false;
 	let isAlreadyStarted = false;
+	let isNotEditable = false;
 
 	async function deleteAppointment(idAppointment: number, idPayment: string) {
 		const { data, status } = await axios.post('/api/appoinments/delete', {
@@ -37,15 +39,27 @@
 
 	function handleShowForm() {
 		console.log('click');
-		isVisibleForm = !isVisibleForm;
+		verifyIsAlreadyStarted();
+
+		if(!isAlreadyStarted) {
+			isVisibleEditForm.subscribe((value) => (isVisibleForm = value));
+			isVisibleForm = !isVisibleForm;
+			console.log(isVisibleForm);
+		} else {
+			isNotEditable = true;
+		}
 	}
 
-	function cancelAppointment() {
-		if (currentDate >= new Date(date) && parseInt(currentHour, 10) + 1 >= hour) {
+	function verifyIsAlreadyStarted() {
+		if (currentDate >= new Date(date) && currentHour + 1 >= hour) {
 			isAlreadyStarted = true;
 		} else {
 			isAlreadyStarted = false;
 		}
+	}
+
+	function cancelAppointment() {
+		verifyIsAlreadyStarted();
 		isConfirmationModalVisible = true;
 	}
 
@@ -93,7 +107,7 @@
 	</td>
 	<td>{description}</td>
 	<th>
-		<button class="btn btn-primary" disabled on:click={handleShowForm}>Edit</button>
+		<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
 		<button class="delete-btn" on:click={cancelAppointment}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +143,7 @@
 			}}
 		/>
 	{/if}
-	{#if isConfirmationModalVisible}
+	{#if isConfirmationModalVisible || isNotEditable}
 		<div
 			class="fixed z-10 inset-0 overflow-y-auto"
 			aria-labelledby="modal-title"
@@ -195,6 +209,7 @@
 							class="btn btn-primary"
 							on:click={() => {
 								isConfirmationModalVisible = false;
+								isNotEditable = false;
 							}}
 						>
 							{#if !isAlreadyStarted}
