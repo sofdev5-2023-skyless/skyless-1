@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { loadStripe } from '@stripe/stripe-js';
-	import type { Stripe, StripeCardElement } from '@stripe/stripe-js';
+	import type { Stripe, StripeCardElement, StripeError } from '@stripe/stripe-js';
 	import { Elements } from 'svelte-stripe';
 	import CardNumber from '$lib/components/pay/CardNumber.svelte';
 	import CardExpiry from './pay/CardExpiry.svelte';
@@ -21,6 +21,10 @@
 	let name: string;
 	let appointmentForm: Reminder;
 	let patientId: string;
+	let message: string;
+	let existError: boolean = false;
+
+	$: existError;
 
 	appointment.subscribe((value) => (appointmentForm = value));
 	masterKey.subscribe((value) => (patientId = value));
@@ -49,22 +53,31 @@
 	}
 
 	const submit = async () => {
-		if (processing) return;
-		processing = true;
+		try {
+			existError = false;
+			if (processing) return;
+			processing = true;
 
-		const clientSecret = await createPaymentIntent();
-		const result = await stripe?.confirmCardPayment(clientSecret, {
-			payment_method: {
-				card: cardElement
-			}
-		});
+			const clientSecret = await createPaymentIntent();
+			const result = await stripe?.confirmCardPayment(clientSecret, {
+				payment_method: {
+					card: cardElement
+				}
+			});
+			if (result?.error) throw result.error;
 
-		appointmentForm.id_transaction = result!.paymentIntent!.id;
+			appointmentForm.id_transaction = result!.paymentIntent!.id;
 
-		await createAppoinment(true, appointmentForm, appointmentForm);
-		await updateDoctorSchedule($appointment.hour, true);
-		console.log(result);
-		goto(`/patient/${patientId}/reminder`);
+			await createAppoinment(true, appointmentForm, appointmentForm);
+			await updateDoctorSchedule($appointment.hour, true);
+			console.log(result);
+			goto(`/patient/${patientId}/reminder`);
+		} catch (error) {
+			existError = true;
+			processing = false;
+			let stripeError: StripeError = error as StripeError;
+			message = stripeError.message ?? 'Error message';
+		}
 	};
 </script>
 
@@ -94,8 +107,14 @@
 						<CardCvc classes={{ base: 'input' }} wrapperClass="mt-3" />
 					</div>
 				</div>
+				{#if existError}
+					<p class="text-red-500">{message}</p>
+				{/if}
 
-				<button class="btn btn-primary mt-2" class:loading={processing}> Pay Appointment </button>
+				<button class="btn btn-primary mt-2">
+					<span class:loading={processing} class:loading-xs={processing} />
+					Pay Appointment
+				</button>
 			</form>
 		</Elements>
 	{/if}
