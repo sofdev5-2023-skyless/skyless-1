@@ -101,4 +101,9 @@ describe('DoctorCard component', () => {
 	  });
 	
 	
+	  it('should not render the link when `cellphone` prop is not provided', () => {
+		const { queryByText } = render(DoctorCard);
+		expect(queryByText('123-456-7890')).toBeNull();
+	  });
+
 });
