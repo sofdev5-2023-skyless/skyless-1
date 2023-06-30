@@ -92,7 +92,7 @@
 		{#await loadSchedule(hour)}
 			Loading...
 		{:then data}
-			{#if isPastHour(data.schedule, date) && isPastDate(date)}
+			{#if isPastHour(data.schedule, date)}
 				<s>{data.schedule}</s>
 			{:else}
 				{data.schedule}
