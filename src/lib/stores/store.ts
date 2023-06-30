@@ -9,6 +9,7 @@ export const menuOpen = writable(false);
 export const areYouDoctor = writable(false);
 export const storeReminders = writable<Reminder[]>([]);
 export const isSearch = writable(false);
+export const isVisibleEditForm = writable(false);
 export const appointment: Writable<Reminder> = writable({
 	date: '',
 	description: '',

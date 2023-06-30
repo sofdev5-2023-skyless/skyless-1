@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
+	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
@@ -8,7 +9,7 @@
 	import type { doctor_schedule } from '@prisma/client';
 	import ErrorZod from './ErrorZod.svelte';
 	import { goto } from '$app/navigation';
-	import { appointment } from '$lib/stores/store';
+	import { appointment, isVisibleEditForm } from '$lib/stores/store';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -33,6 +34,8 @@
 		id_user: ''
 	};
 
+	const a = loadSchedule(appointmentForm.hour);
+
 	const handleSubmit = async () => {
 		try {
 			isBadDescription = false;
@@ -42,7 +45,9 @@
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await editAppointment(isVisible, appointment, appointmentForm);
 				console.log(isVisible);
+				isVisibleEditForm.set(false);
 				await updateReminders(appointment.id_user);
+				await updateDoctorSchedule(appointment.hour);
 			} else {
 				appointmentForm.id_doctor = id;
 				appointmentForm.id_user = localStorage.getItem('key') ?? '';
@@ -79,7 +84,7 @@
 
 <div class="modal">
 	<div class="modal-box relative">
-		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
+		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2" >✕</label
 		>
 		<form on:submit|preventDefault={handleSubmit} method="post">
 			<h1>{id}</h1>
@@ -97,15 +102,12 @@
 			</div>
 			<select class="select select-bordered w-full max-w-xs" bind:value={appointmentForm.hour}>
 				{#await loadSchedules()}
-					<option value="">Loading...</option>
+					<option selected value="">Loading...</option>
 				{:then schedules}
+					<option disabled selected value={0}>Select a schedule available</option>
 					{#each schedules as schedule (schedule.id)}
-						<option disabled selected value={0}>Select a schedule available</option>
 						{#if !schedule.occupied}
 							<option value={schedule.id}>{schedule.schedule}</option>
-						{/if}
-						{#if isEdit}
-							<option selected value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
 				{:catch error}
