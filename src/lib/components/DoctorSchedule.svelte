@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div class="container text-center">
+<div class="container mx-auto text-center">
 	<DoctorScheduleForm {id_doctor} />
 	<DoctorScheduleList {id_doctor} />
 </div>

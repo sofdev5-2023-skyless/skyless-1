@@ -15,7 +15,7 @@
 	};
 </script>
 
-<div class="container items-center justify-center text-center p-5">
+<div class="container mx-auto items-center justify-center text-center p-5">
 	<h2 class="text-2xl font-bold">Your schedules</h2>
 
 	{#key $updateSchedules}
