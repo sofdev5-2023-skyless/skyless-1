@@ -21,11 +21,13 @@
 	});
 </script>
 
-<Carousel />
+<div class="container mx-auto">
+	<Carousel />
 
-<DoctorSchedule />
-<div class="p-10 sm:ml-614">
-	<div class="overflow-x-auto w-full">
-		<ReminderTable />
+	<DoctorSchedule />
+	<div class="p-1">
+		<div class="">
+			<ReminderTable />
+		</div>
 	</div>
 </div>

@@ -15,7 +15,7 @@
 	});
 </script>
 
-<div class="sm:block pt-16 pb-0 pl-64">
+<div class="sm:block pt-16 pb-16">
 	<div class="overflow-x-auto w-full">
 		<table class="table w-full">
 			{#if reminders.length !== 0}
@@ -40,11 +40,11 @@
 					{/each}
 				</tbody>
 			{:else}
-				<div class="hero min-h-screen bg-base-100">
+				<div class="hero bg-base-100">
 					<div class="hero-content text-center">
 						<div class="max-w-md">
 							<h1 class="text-5xl font-bold">There is no appoinments</h1>
-							<p class="py-6">
+							<p class="py-1">
 								Your reminders are visible here, if you need some service, consider booking an
 								appointment with our doctors
 							</p>
