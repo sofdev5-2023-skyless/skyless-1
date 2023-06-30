@@ -71,6 +71,14 @@
 			<li>
 				<a href="/about-us">About us </a>
 			</li>
+			{#if $menuOpen}
+				<li>
+					<div class="drawer-content">
+						<!-- Page content here -->
+						<label for="my-drawer" class="drawer-button">Open drawer</label>
+					</div>
+				</li>
+			{/if}
 		</ul>
 	</div>
 	<div class="navbar-end">
