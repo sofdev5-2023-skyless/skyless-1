@@ -58,11 +58,19 @@
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1">
 			<li>
-				<a href="/doctor-list"> View all doctors</a>
+				<a href="/doctor-list">View all doctors</a>
 			</li>
 			<li>
-				<a href="/about-us"> About us </a>
+				<a href="/about-us">About us </a>
 			</li>
+			{#if $menuOpen}
+				<li>
+					<div class="drawer-content">
+						<!-- Page content here -->
+						<label for="my-drawer" class="drawer-button">Open drawer</label>
+					</div>
+				</li>
+			{/if}
 		</ul>
 	</div>
 	<div class="navbar-end">

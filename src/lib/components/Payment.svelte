@@ -13,7 +13,7 @@
 	import { goto } from '$app/navigation';
 	import { loadPatient } from '$lib/ts/useLoadData';
 	import { env } from '$env/dynamic/public';
-	import toast from 'svelte-french-toast'
+	import toast from 'svelte-french-toast';
 
 	let stripe: Stripe | null;
 	let cardElement: StripeCardElement;
@@ -39,12 +39,12 @@
 			name: `${patient.firstName} ${patient.lastName}`
 		});
 		const { ok, clientSecret, message } = data;
-		
+
 		toast.promise(Promise.resolve(ok), {
 			loading: 'Saving...',
-			success:'Payment successful!',
-			error: 'Could not pay',
-	  	});
+			success: 'Payment successful!',
+			error: 'Could not pay'
+		});
 
 		if (ok) {
 			return clientSecret;

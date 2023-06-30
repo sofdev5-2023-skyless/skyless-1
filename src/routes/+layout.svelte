@@ -4,6 +4,9 @@
 	import '../app.postcss';
 	import Registry from '$lib/ts/registry';
 	import { onMount } from 'svelte';
+	import { menuOpen } from '$lib/stores/store';
+	import SideMenu from '$lib/components/SideMenu.svelte';
+	import Register from '$lib/components/Register.svelte';
 
 	onMount(async () => {
 		const key = localStorage.getItem('key');
@@ -24,4 +27,9 @@
 
 	<slot />
 	<Footer />
+	{#if $menuOpen}
+		<SideMenu />
+	{/if}
+	<!-- Put this part before </body> tag -->
+	<Register />
 </div>
