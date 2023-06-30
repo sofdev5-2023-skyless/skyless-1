@@ -56,7 +56,7 @@
 		{/if}
 	</div>
 	<div class="navbar-center hidden lg:flex">
-		<ul class="menu menu-horizontal">
+		<ul class="menu menu-horizontal px-1">
 			<li>
 				<a href="/doctor-list"> View all doctors</a>
 			</li>

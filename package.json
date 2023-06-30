@@ -51,7 +51,7 @@
 		"axios": "^1.4.0",
 		"bootstrap-icons": "^1.10.5",
 		"classnames": "^2.3.2",
-		"daisyui": "^2.51.6",
+		"daisyui": "^3.1.7",
 		"flowbite": "^1.6.5",
 		"flowbite-svelte": "^0.35.3",
 		"js-cookie": "^3.0.5",

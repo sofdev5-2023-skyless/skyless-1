@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div class="pt-20 pl-12 pr-20 sm:ml-64">
+<div class="pt-20">
 	<form>
 		<label
 			for="default-search"

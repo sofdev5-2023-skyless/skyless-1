@@ -17,8 +17,8 @@
 	});
 </script>
 
-<div class="flex flex-col min-h-screen">
-	<header class="sticky top-0 z-50">
+<div class="flex flex-col">
+	<header class="sticky z-50">
 		<Header />
 	</header>
 

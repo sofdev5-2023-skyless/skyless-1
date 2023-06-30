@@ -5,13 +5,13 @@
 	import PaymentDescription from '$lib/components/PaymentDescription.svelte';
 </script>
 
-<Toaster position="top-center"/>
-
-<div class="mb-16 mt-20 flex w-full justify-center items-center">
-	<div class="grid h-400 flex-grow place-items-center">
-		<Payment />
-	</div>
-	<div class="grid h-300 flex-grow place-items-center">
-		<PaymentDescription />
+<div class="container mx-auto mb-72">
+	<div class="grid-cols-2 mt-20 flex justify-center items-center">
+		<div class="grid flex-grow place-items-center">
+			<Payment />
+		</div>
+		<div class="grid flex-grow place-items-center">
+			<PaymentDescription />
+		</div>
 	</div>
 </div>

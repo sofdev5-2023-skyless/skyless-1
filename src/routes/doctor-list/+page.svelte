@@ -21,16 +21,18 @@
 	});
 </script>
 
-<Searcher />
+<div class="container mx-auto">
+	<Searcher />
 
-<div class="flex flex-col min-h-screen pb-10">
-	{#if !actualIsSearch}
-		{#each specilities as { id, name } (id)}
-			<DoctorList
-				isOpen={id[id.length - 1] <= '1'}
-				specialityName={name}
-				specialityPath={`/api/doctors/speciality?id=${id}`}
-			/>
-		{/each}
-	{/if}
+	<div class="flex flex-col min-h-screen pb-10">
+		{#if !actualIsSearch}
+			{#each specilities as { id, name } (id)}
+				<DoctorList
+					isOpen={id[id.length - 1] <= '1'}
+					specialityName={name}
+					specialityPath={`/api/doctors/speciality?id=${id}`}
+				/>
+			{/each}
+		{/if}
+	</div>
 </div>

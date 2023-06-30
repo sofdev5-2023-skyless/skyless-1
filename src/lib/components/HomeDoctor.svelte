@@ -4,6 +4,7 @@
 	import { areYouDoctor, masterKey } from '$lib/stores/store';
 	import ReminderTable from './DoctorReminderTable.svelte';
 	import { goto } from '$app/navigation';
+	import DoctorSchedule from './DoctorSchedule.svelte';
 	let isFormVisible = false;
 
 	function toggleForm() {
@@ -20,10 +21,13 @@
 	});
 </script>
 
-<Carousel />
+<div class="container mx-auto">
+	<Carousel />
 
-<div class="p-10 sm:ml-614">
-	<div class="overflow-x-auto w-full">
-		<ReminderTable />
+	<DoctorSchedule />
+	<div class="p-1">
+		<div class="">
+			<ReminderTable />
+		</div>
 	</div>
 </div>

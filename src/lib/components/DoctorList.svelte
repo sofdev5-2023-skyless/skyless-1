@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div class="container mx-auto pt-16 pl-12 pr-20 sm:ml-64">
+<div class="container mx-auto pt-16">
 	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 	<div class="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow">
 		<input type="checkbox" bind:checked={isOpen} />

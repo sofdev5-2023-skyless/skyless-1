@@ -18,3 +18,4 @@ export const appointment: Writable<Reminder> = writable({
 	id_user: '',
 	id_appointment: 0
 });
+export const updateSchedules = writable(false);
