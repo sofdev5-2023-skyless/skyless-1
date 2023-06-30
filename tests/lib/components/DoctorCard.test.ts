@@ -181,4 +181,11 @@ describe('DoctorCard component', () => {
 		expect(getByText('Schedule')).toBeInTheDocument();
 	});
 
+	it('should render the correct link', () => {
+		const { getByText } = render(DoctorCard);
+
+		expect(getByText('More information')).toBeTruthy();
+	});
+
+	
 });
