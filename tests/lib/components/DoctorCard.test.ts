@@ -70,4 +70,15 @@ describe('DoctorCard component', () => {
 		expect(getByAltText('default')).toBeInTheDocument();
 	});
 
+	it('should render the correct title', () => {
+		const { getByText } = render(DoctorCard, {
+			props: {
+				name: 'John',
+				lastName: 'Doe'
+			}
+		});
+		expect(getByText('John Doe')).toBeTruthy();
+	});
+
+	
 });
