@@ -4,10 +4,8 @@
 
 	export let id = '';
 	let isBadDescription: boolean = false;
-	let messageDescription: string = '';
 	let schduleLabel: string = '';
 	export let isVisible: boolean = false;
-	export let isEdit: boolean = false;
 	export let patientName: string;
 
 	$: isBadDescription;

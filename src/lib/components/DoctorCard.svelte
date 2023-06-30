@@ -26,6 +26,7 @@
 		<div>
 			<a class="link link-hover link-info" href="/doctor-profile">More information</a>
 			<br />
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="link link-hover link-info"><i class="bi bi-telephone-fill" />{cellphone}</a>
 			<br />
 			{#if $menuOpen}

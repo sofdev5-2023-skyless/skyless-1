@@ -83,7 +83,7 @@
 
 <div class="modal">
 	<div class="modal-box relative">
-		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2" >✕</label
+		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
 		>
 		<form on:submit|preventDefault={handleSubmit} method="post">
 			<h1>{id}</h1>

@@ -1,6 +1,5 @@
 <script lang="ts">
-	let clazz: string = 'w-5 h-5';
-	export { clazz as class };
+	
 </script>
 
 <svg
