@@ -165,4 +165,20 @@ describe('DoctorCard component', () => {
 	  
 		expect(getByText('Schedule')).toBeInTheDocument();
 	});
+	
+	it('displays whole informtation at the ReminderForm component', () => {
+		const props = {
+		  id: '1',
+		  name: 'John',
+		  lastName: 'Doe',
+		  speciality: 'Cardiology',
+		  cellphone: '123456789',
+		};
+	  
+		const { getByText } = render(DoctorCard, props);
+	  	expect(getByText('Book Medical Appointment')).toBeInTheDocument();
+		expect(getByText('Fecha:')).toBeInTheDocument();
+		expect(getByText('Schedule')).toBeInTheDocument();
+	});
+
 });
