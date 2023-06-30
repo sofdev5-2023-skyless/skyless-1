@@ -124,4 +124,20 @@ describe('DoctorCard component', () => {
 		expect(getByText('123-456-7890')).toBeTruthy();
 	});
 
+	it('displays the ReminderForm component', () => {
+		const props = {
+		  id: '1',
+		  name: 'John',
+		  lastName: 'Doe',
+		  speciality: 'Cardiology',
+		  cellphone: '123456789',
+		};
+	  
+		const { getByText } = render(DoctorCard, props);
+	  
+		expect(getByText('Book Medical Appointment')).toBeInTheDocument();
+	});
+	
+	
+	
 });
