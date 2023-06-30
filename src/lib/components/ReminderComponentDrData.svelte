@@ -14,6 +14,7 @@
 	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
+	let isDueDateFl:boolean = false
 
 	let namePatient: string;
 	let speciality: string;
@@ -60,9 +61,10 @@
 		return result;
 	};
 
-	function isPastHour(hour: string) {
-		const currentHour = new Date().getHours();
-		return parseInt(hour, 10) < currentHour;
+	function isPastHour(hour:string, date:string) {
+    	const currentHour = new Date().getHours();
+		isDueDateFl = new Date(date).toDateString() === new Date().toDateString() && parseInt(hour, 10) < currentHour;
+    	return isDueDateFl
 	}
 
 	function isPastDate(date: string) {
@@ -90,7 +92,7 @@
 		{#await loadSchedule(hour)}
 			Loading...
 		{:then data}
-			{#if isPastHour(data.schedule) && isPastDate(date)}
+			{#if isPastHour(data.schedule, date) && isPastDate(date)}
 				<s>{data.schedule}</s>
 			{:else}
 				{data.schedule}
@@ -106,13 +108,6 @@
 			{/if}
 		</span>
 	</td>
-
-	<script>
-		function isPastHour(hour) {
-			const currentHour = new Date().getHours();
-			return parseInt(hour, 10) < currentHour;
-		}
-	</script>
 
 	<td>{description}</td>
 	<th>
@@ -195,7 +190,7 @@
 						<button
 							type="button"
 							class="btn btn-primary"
-							style="margin-left: 3%;"
+							style={`margin-left: 3%; visibility: ${isDueDateFl ? 'hidden' : 'visible'}`}
 							on:click={() => {
 								deleteAppointment(id_appointment);
 								isConfirmationModalVisible = false;
