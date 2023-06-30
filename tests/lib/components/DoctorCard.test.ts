@@ -138,6 +138,19 @@ describe('DoctorCard component', () => {
 		expect(getByText('Book Medical Appointment')).toBeInTheDocument();
 	});
 	
-	
+	it('displays the "Fecha:" text', () => {
+		const props = {
+		  id: '1',
+		  name: 'John',
+		  lastName: 'Doe',
+		  speciality: 'Cardiology',
+		  cellphone: '123456789',
+		};
+	  
+		const { getByText } = render(DoctorCard, props);
+	  
+		expect(getByText('Fecha:')).toBeInTheDocument();
+	  });
+
 	
 });
