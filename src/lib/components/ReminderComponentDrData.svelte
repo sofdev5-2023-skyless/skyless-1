@@ -61,11 +61,19 @@
 		return result;
 	};
 
-	function isPastHour(hour:string, date:string) {
-    	const currentHour = new Date().getHours();
-		isDueDateFl = new Date(date).toDateString() === new Date().toDateString() && parseInt(hour, 10) < currentHour;
-    	return isDueDateFl
+	function isPastHour(hour: string, date: string) {
+		const currentHour = new Date().getHours();
+		const [startHourStr, endHourStr] = hour.split('-');
+		const startHour = parseInt(startHourStr.split(':')[0], 10);
+		const endHour = parseInt(endHourStr.split(':')[0], 10);
+		const dueDate =
+		new Date(date).toDateString() === new Date().toDateString() &&
+		startHour <= currentHour &&currentHour <= endHour;
+		console.log(dueDate);
+		isDueDateFl = dueDate
+		return dueDate;
 	}
+
 
 	function isPastDate(date: string) {
 		const currentDate = new Date().setHours(0, 0, 0, 0);
