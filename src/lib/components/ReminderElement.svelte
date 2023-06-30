@@ -133,7 +133,11 @@
 	</td>
 	<td>{description}</td>
 	<th>
+		{#if !isDone}
 		<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
+		{:else}
+		<button class="btn btn-primary" disabled>Edit</button>
+		{/if}
 		<button class="delete-btn" on:click={cancelAppointment}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
