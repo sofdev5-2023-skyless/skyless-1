@@ -100,6 +100,15 @@ describe('DoctorCard component', () => {
 		});
 		expect(getByText('111-222-3333')).toBeTruthy();
 	});
+	
+	it('should render the correct link', () => {
+		const { getByText, getByTestId } = render(DoctorCard, {
+			props: {
+				cellphone: '123-456-7890'
+			}
+		});
+		expect(getByText('123-456-7890')).toBeTruthy();
+	});
 
 	it('should render the correct link', () => {
 		const { getByText, getByTestId } = render(DoctorCard, {
