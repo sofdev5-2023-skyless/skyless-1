@@ -14,7 +14,7 @@
 	export let hour: number = 0;
 	export let description: string = 'Default';
 	export let id_appointment: number = 0;
-	let isDueDateFl:boolean = false
+	let isDueDateFl: boolean = false;
 
 	let namePatient: string;
 	let speciality: string;
@@ -66,14 +66,14 @@
 		const [startHourStr, endHourStr] = hour.split('-');
 		const startHour = parseInt(startHourStr.split(':')[0], 10);
 		const endHour = parseInt(endHourStr.split(':')[0], 10);
+
 		const dueDate =
-		new Date(date).toDateString() === new Date().toDateString() &&
-		startHour <= currentHour &&currentHour <= endHour;
+			new Date(date).getTime() <= new Date().getTime() &&
+			!(startHour <= currentHour && currentHour <= endHour);
 		console.log(dueDate);
-		isDueDateFl = dueDate
+		isDueDateFl = dueDate;
 		return dueDate;
 	}
-
 
 	function isPastDate(date: string) {
 		const currentDate = new Date().setHours(0, 0, 0, 0);
@@ -120,7 +120,11 @@
 	<td>{description}</td>
 	<th>
 		<button class="btn btn-primary" on:click={handleShowForm}>SHOW</button>
-		<button class="delete-btn" on:click={() => (isConfirmationModalVisible = true)}>
+		<button
+			class="delete-btn"
+			class:hidden={isDueDateFl}
+			on:click={() => (isConfirmationModalVisible = true)}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="icon icon-tabler icon-tabler-trash"
@@ -198,7 +202,6 @@
 						<button
 							type="button"
 							class="btn btn-primary"
-							style={`margin-left: 3%; visibility: ${isDueDateFl ? 'hidden' : 'visible'}`}
 							on:click={() => {
 								deleteAppointment(id_appointment);
 								isConfirmationModalVisible = false;
