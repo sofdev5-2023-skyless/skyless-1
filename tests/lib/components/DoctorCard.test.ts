@@ -80,5 +80,25 @@ describe('DoctorCard component', () => {
 		expect(getByText('John Doe')).toBeTruthy();
 	});
 
+	it('should render the updated name and last name when props are changed', () => {
+		const { getByText, rerender } = render(DoctorCard, {
+		  props: {
+			name: 'Jane',
+			lastName: 'Smith'
+		  }
+		});
+	  
+		expect(getByText('Jane Smith')).toBeTruthy();
+	  
+		rerender({
+		  props: {
+			name: 'Mark',
+			lastName: 'Johnson'
+		  }
+		});
+	  
+		expect(getByText('Mark Johnson')).toBeTruthy();
+	  });
+	
 	
 });
