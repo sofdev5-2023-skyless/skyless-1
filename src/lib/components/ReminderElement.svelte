@@ -28,19 +28,36 @@
 	let isNotEditable = false;
 
 	async function deleteAppointment(idAppointment: number, idPayment: string) {
-		const refund = await axios.post('/api/stripe/refund', {
+		// const refund = await axios.post('/api/stripe/refund', {
+		// 	payment_intent: idPayment
+		// });
+
+		// let { data, status } = await axios.post('/api/appoinments/delete', {
+		// 		id_appointment: idAppointment
+		// });
+
+		toast.promise(
+			axios.post('/api/stripe/refund', {
 			payment_intent: idPayment
-		});
+		}),
+   		{
+     	loading: 'Refunding...',
+     	success: 'Refunded!',
+     	error: 'Could not refund'
+   		});
 
-		console.log(refund);
-
-		const { data, status } = await axios.post('/api/appoinments/delete', {
-			id_appointment: idAppointment
-		});
+		toast.promise(
+			axios.post('/api/appoinments/delete', {
+				id_appointment: idAppointment
+		}),
+   		{
+     	loading: 'Deleting...',
+     	success: 'Deleted!',
+     	error: 'Could not delete'
+		})
 	
 		await updateReminders(idUser);
 		await updateDoctorSchedule(hour);
-		return data;
 	}
 
 	function handleShowForm() {
