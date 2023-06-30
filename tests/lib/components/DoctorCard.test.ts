@@ -53,5 +53,21 @@ describe('DoctorCard component', () => {
 		const { getByAltText } = render(DoctorCard, props);
 		expect(getByAltText('default')).toBeInTheDocument();
 	  });
+	  
+	it('renders the doctor information correctly', () => {
+		const props = {
+		  id: '1',
+		  name: 'John',
+		  lastName: 'Doe',
+		  speciality: 'Cardiology',
+		  cellphone: '123456789',
+		};
+	  
+		const { getByText, getByAltText } = render(DoctorCard, props);
+	  	expect(getByText('John Doe')).toBeInTheDocument();
+		expect(getByText('Cardiology')).toBeInTheDocument();
+		expect(getByText('123456789')).toBeInTheDocument();
+		expect(getByAltText('default')).toBeInTheDocument();
+	});
 
 });
