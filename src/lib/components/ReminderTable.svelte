@@ -19,9 +19,9 @@
 
 <Toaster position="top-center" />
 
-<div class="sm:block pt-16 pb-0 pl-64">
-	<div class="overflow-x-auto w-full">
-		<table class="table w-full">
+<div class="container mx-auto pt-10">
+	<div class="overflow-x-auto">
+		<table class="table">
 			{#if reminders.length !== 0}
 				<!-- head -->
 				<thead>
