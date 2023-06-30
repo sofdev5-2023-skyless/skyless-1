@@ -28,12 +28,16 @@
 	let isNotEditable = false;
 
 	async function deleteAppointment(idAppointment: number, idPayment: string) {
+		const refund = await axios.post('/api/stripe/refund', {
+			payment_intent: idPayment
+		});
+
+		console.log(refund);
+
 		const { data, status } = await axios.post('/api/appoinments/delete', {
 			id_appointment: idAppointment
 		});
-		await axios.post('/api/stripe/refund', {
-			payment_intent: idPayment
-		});
+	
 		await updateReminders(idUser);
 		await updateDoctorSchedule(hour);
 		return data;
@@ -60,6 +64,13 @@
 		}
 	}
 
+	function completeAppointment() {
+		isDone = !isDone
+		if (isDone) {
+			toast.success("Appointment completed!");	
+		}
+	}
+			
 	function cancelAppointment() {
 		verifyIsAlreadyStarted();
 		isConfirmationModalVisible = true;
@@ -70,12 +81,10 @@
 	}
 </script>
 
-<Toaster position="top-center"/>
-
 <tr class="hover" class:line-through={isDone}>
 	<th>
 		<label>
-			<input type="checkbox" class="checkbox" bind:checked={isDone} />
+			<input type="checkbox" class="checkbox" bind:checked={isDone} on:click={completeAppointment} />
 		</label>
 	</th>
 	<td>
