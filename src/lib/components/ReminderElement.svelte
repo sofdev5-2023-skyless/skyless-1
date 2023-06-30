@@ -28,15 +28,9 @@
 	let isNotEditable = false;
 
 	async function deleteAppointment(idAppointment: number, idPayment: string) {
-		// const refund = await axios.post('/api/stripe/refund', {
-		// 	payment_intent: idPayment
-		// });
+		let refund;
 
-		// let { data, status } = await axios.post('/api/appoinments/delete', {
-		// 		id_appointment: idAppointment
-		// });
-
-		toast.promise(
+		refund = await toast.promise(
 			axios.post('/api/stripe/refund', {
 			payment_intent: idPayment
 		}),
@@ -46,15 +40,17 @@
      	error: 'Could not refund'
    		});
 
-		toast.promise(
+		if(refund.status == 200) {
+			toast.promise(
 			axios.post('/api/appoinments/delete', {
 				id_appointment: idAppointment
-		}),
-   		{
-     	loading: 'Deleting...',
-     	success: 'Deleted!',
-     	error: 'Could not delete'
-		})
+			}),
+			{
+			loading: 'Deleting...',
+			success: 'Deleted!',
+			error: 'Could not delete'
+			})
+		}
 	
 		await updateReminders(idUser);
 		await updateDoctorSchedule(hour);
