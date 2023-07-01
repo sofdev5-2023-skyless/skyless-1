@@ -69,7 +69,6 @@
 
 			await createAppoinment(true, appointmentForm, appointmentForm);
 			await updateDoctorSchedule($appointment.hour, true);
-
 			goto(`/patient/${patientId}/reminder`);
 		} catch (error) {
 			existError = true;
