@@ -7,7 +7,6 @@
 	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 	import { isVisibleEditForm } from '$lib/stores/store';
 	import toast from 'svelte-french-toast'
-	import {Toaster} from 'svelte-french-toast'
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -56,21 +55,23 @@
 		await updateDoctorSchedule(hour);
 	}
 
-	function handleShowForm() {
-		console.log('click');
-		verifyIsAlreadyStarted();
+	async function handleShowForm() {
+		await verifyIsAlreadyStarted();
 
 		if(!isAlreadyStarted) {
 			isVisibleEditForm.subscribe((value) => (isVisibleForm = value));
 			isVisibleForm = !isVisibleForm;
-			console.log(isVisibleForm);
 		} else {
 			isNotEditable = true;
+			isVisibleForm = false;
 		}
 	}
 
-	function verifyIsAlreadyStarted() {
-		if (currentDate >= new Date(date) && currentHour + 1 >= hour) {
+	async function verifyIsAlreadyStarted() {
+		const formatedHour = await loadSchedule(hour);
+		const appointmentHour = formatedHour.schedule.slice(0,2);
+		
+		if (currentDate >= new Date(date) && currentHour >= parseInt(appointmentHour)) {
 			isAlreadyStarted = true;
 		} else {
 			isAlreadyStarted = false;

@@ -44,7 +44,6 @@
 				appointmentForm.id_appointment = parseInt(id);
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await editAppointment(isVisible, appointment, appointmentForm);
-				console.log(isVisible);
 				isVisibleEditForm.set(false);
 				await updateReminders(appointment.id_user);
 				await updateDoctorSchedule(appointment.hour);
