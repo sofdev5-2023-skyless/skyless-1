@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
-	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
+	import { loadSchedule } from '$lib/ts/useLoadData';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';

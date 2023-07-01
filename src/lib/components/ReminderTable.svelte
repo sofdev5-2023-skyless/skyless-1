@@ -14,7 +14,6 @@
 		const response = await fetch(url);
 		const reminders = await response.json();
 		storeReminders.set(reminders);
-		console.log(reminders);
 	});
 </script>
 

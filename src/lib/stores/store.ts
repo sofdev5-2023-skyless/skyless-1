@@ -1,4 +1,3 @@
-import { Auth } from '$lib/ts/keycloak';
 import type { Reminder } from '$lib/types/reminder';
 import { writable, type Writable } from 'svelte/store';
 

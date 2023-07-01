@@ -28,7 +28,6 @@
 	const { doctor, errors, messages, cleanAll, cleanError, cleanMessage } = useRegisterForm();
 
 	const handleSubmit = async () => {
-		console.log('click');
 
 		if (doctorCode === 1234) {
 			const { id, firstName, lastName, email } = await loadPatient(key);
@@ -42,7 +41,6 @@
 
 			try {
 				const result = doctorSchema.parse(doctor);
-				console.log(result);
 
 				await axios.post('/api/doctors/create', result);
 
@@ -76,7 +74,7 @@
 		const resp = await fetch('/api/specialities');
 		const js = await resp.json();
 		specialities = js;
-		console.log('hello');
+
 		return () => {
 			console.log('unmounted');
 		};

@@ -36,7 +36,6 @@
 	}
 
 	function handleShowForm() {
-		console.log('click');
 		isVisibleForm = !isVisibleForm;
 	}
 

@@ -1,7 +1,6 @@
 import type { Doctor } from '$lib/types/doctor';
 import axios from 'axios';
 import type { doctor_schedule, schedule } from '@prisma/client';
-import { masterToken, masterKey } from '$lib/stores/store';
 import type { Client } from '$lib/types/client';
 import Registry from './registry';
 
