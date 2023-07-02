@@ -19,7 +19,7 @@
 
 <Toaster position="top-center" />
 
-<div class="container mx-auto pt-10">
+<div class="container mx-auto pt-20">
 	<div class="overflow-x-auto">
 		<table class="table">
 			{#if reminders.length !== 0}
