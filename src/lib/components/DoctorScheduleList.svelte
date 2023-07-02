@@ -11,6 +11,7 @@
 			id
 		});
 		if (data.ok === 200) {
+			toast.success('A schedule has been deleted');
 			updateSchedules.set(!$updateSchedules);
 		} else {
 			toast.error('This schedule has been reserved');
@@ -31,7 +32,7 @@
 				<h1 class="text-xl">You do not have scheudules</h1>
 			{:else}
 				<div class="overflow-x-auto">
-					<table class="table-lg mx-auto table-zebra text-center items-center justify-center">
+					<table class="table-lg mx-auto table-zebra">
 						<!-- head -->
 						<thead>
 							<tr>

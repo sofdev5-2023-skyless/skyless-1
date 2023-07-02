@@ -28,7 +28,7 @@
 			schedule: scheduleSelected
 		});
 		if (data.ok == 200) {
-			toast.success('Added new schedule');
+			toast.success('New schedule added');
 			updateSchedules.set(!$updateSchedules);
 		}
 		processing = false;

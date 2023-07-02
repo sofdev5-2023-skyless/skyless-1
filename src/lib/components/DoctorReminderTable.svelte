@@ -17,7 +17,7 @@
 
 <div class="sm:block pt-16 pb-16">
 	<div class="overflow-x-auto w-full">
-		<table class="table w-full">
+		<table class="table-lg table-zebra mx-auto w-full">
 			{#if reminders.length !== 0}
 				<thead>
 					<tr>

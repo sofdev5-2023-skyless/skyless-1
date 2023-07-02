@@ -105,6 +105,9 @@
 					<option disabled selected value={0}>Select a schedule available</option>
 					{#each schedules as schedule (schedule.id)}
 						{#if !schedule.occupied}
+							{#if schedule.id === appointmentForm.hour}
+								<option selected value={schedule.id}>{schedule.schedule}</option>
+							{/if}
 							<option value={schedule.id}>{schedule.schedule}</option>
 						{/if}
 					{/each}
