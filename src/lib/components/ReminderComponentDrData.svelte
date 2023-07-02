@@ -147,7 +147,6 @@
 	</th>
 	{#if isVisibleForm}
 		<ReminderForm
-			isEdit={true}
 			id={id_appointment + ''}
 			isVisible={isVisibleForm}
 			patientName={namePatient}
@@ -225,27 +224,6 @@
 </tr>
 
 <style>
-	.my-button {
-		background-color: #79ccd1;
-		border-radius: 8px;
-		border: none;
-		color: white;
-		font-size: 1rem;
-		padding: 10px 20px;
-		height: 42px;
-		width: 90px;
-		text-align: center;
-		cursor: pointer;
-	}
-
-	.my-button:hover {
-		background-color: #2ca2d8;
-	}
-	.my-button:focus {
-		outline: none;
-		box-shadow: 0 0 0 3px rgba(74, 134, 232, 0.6);
-	}
-
 	.delete-btn {
 		background-color: #e74c3c;
 		position: relative;

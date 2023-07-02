@@ -6,7 +6,7 @@
 	import axios from 'axios';
 	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
 	import { isVisibleEditForm } from '$lib/stores/store';
-	import toast from 'svelte-french-toast'
+	import toast from 'svelte-french-toast';
 
 	let isDone: boolean = false;
 	export let idDoctor: string = '0';
@@ -31,26 +31,28 @@
 
 		refund = await toast.promise(
 			axios.post('/api/stripe/refund', {
-			payment_intent: idPayment
-		}),
-   		{
-     	loading: 'Refunding...',
-     	success: 'Refunded!',
-     	error: 'Could not refund'
-   		});
-
-		if(refund.status == 200) {
-			toast.promise(
-			axios.post('/api/appoinments/delete', {
-				id_appointment: idAppointment
+				payment_intent: idPayment
 			}),
 			{
-			loading: 'Deleting...',
-			success: 'Deleted!',
-			error: 'Could not delete'
-			})
+				loading: 'Refunding...',
+				success: 'Refunded!',
+				error: 'Could not refund'
+			}
+		);
+
+		if (refund.status == 200) {
+			toast.promise(
+				axios.post('/api/appoinments/delete', {
+					id_appointment: idAppointment
+				}),
+				{
+					loading: 'Deleting...',
+					success: 'Deleted!',
+					error: 'Could not delete'
+				}
+			);
 		}
-	
+
 		await updateReminders(idUser);
 		await updateDoctorSchedule(hour);
 	}
@@ -58,7 +60,7 @@
 	async function handleShowForm() {
 		await verifyIsAlreadyStarted();
 
-		if(!isAlreadyStarted) {
+		if (!isAlreadyStarted) {
 			isVisibleEditForm.subscribe((value) => (isVisibleForm = value));
 			isVisibleForm = !isVisibleForm;
 		} else {
@@ -79,12 +81,12 @@
 	}
 
 	function completeAppointment() {
-		isDone = !isDone
+		isDone = !isDone;
 		if (isDone) {
-			toast.success("Appointment completed!");	
+			toast.success('Appointment completed!');
 		}
 	}
-			
+
 	function cancelAppointment() {
 		verifyIsAlreadyStarted();
 		isConfirmationModalVisible = true;
@@ -98,7 +100,12 @@
 <tr class="hover" class:line-through={isDone}>
 	<th>
 		<label>
-			<input type="checkbox" class="checkbox" bind:checked={isDone} on:click={completeAppointment} />
+			<input
+				type="checkbox"
+				class="checkbox"
+				bind:checked={isDone}
+				on:click={completeAppointment}
+			/>
 		</label>
 	</th>
 	<td>
@@ -135,9 +142,9 @@
 	<td>{description}</td>
 	<th>
 		{#if !isDone}
-		<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
+			<button class="btn btn-primary" on:click={handleShowForm}>Edit</button>
 		{:else}
-		<button class="btn btn-primary" disabled>Edit</button>
+			<button class="btn btn-primary" disabled>Edit</button>
 		{/if}
 		<button class="delete-btn" on:click={cancelAppointment}>
 			<svg

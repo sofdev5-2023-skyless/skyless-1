@@ -4,14 +4,13 @@
 	import { areYouDoctor, masterKey } from '$lib/stores/store';
 </script>
 
-<aside
-	id="logo-sidebar"
-	class="fixed top-0 left-0 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-	aria-label="Sidebar"
->
-	<div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-		<ul class="space-y-2 font-medium">
-			<li class="disabled">
+<div class="drawer">
+	<input id="my-drawer" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-side">
+		<label for="my-drawer" class="drawer-overlay" />
+		<ul class="menu p-4 w-80 h-full bg-base-200 text-base-content pt-20">
+			<li class="disabled pb-2">
+				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a
 					href="#"
 					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -24,7 +23,7 @@
 					>
 				</a>
 			</li>
-			<li>
+			<li class="pb-2">
 				<a
 					href={`/patient/${$masterKey}/reminder`}
 					class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -40,4 +39,4 @@
 			{/if}
 		</ul>
 	</div>
-</aside>
+</div>

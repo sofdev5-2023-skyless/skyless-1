@@ -1,5 +1,4 @@
 <script>
-	import {Toaster} from 'svelte-french-toast'
 	import Payment from '$lib/components/Payment.svelte';
 	import PaymentDescription from '$lib/components/PaymentDescription.svelte';
 </script>

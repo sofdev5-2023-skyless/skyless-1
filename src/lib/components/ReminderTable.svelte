@@ -2,7 +2,7 @@
 	import ReminderElement from '$lib/components/ReminderElement.svelte';
 	import { storeReminders } from '$lib/stores/store';
 	import type { Reminder } from '$lib/types/reminder';
-	import {Toaster} from 'svelte-french-toast'
+	import { Toaster } from 'svelte-french-toast';
 	import { onMount } from 'svelte';
 
 	let reminders: Reminder[] = [];
@@ -17,11 +17,11 @@
 	});
 </script>
 
-<Toaster position="top-center"/>
+<Toaster position="top-center" />
 
-<div class="sm:block pt-16 pb-0 pl-64">
-	<div class="overflow-x-auto w-full">
-		<table class="table w-full">
+<div class="container mx-auto pt-10">
+	<div class="overflow-x-auto">
+		<table class="table">
 			{#if reminders.length !== 0}
 				<!-- head -->
 				<thead>

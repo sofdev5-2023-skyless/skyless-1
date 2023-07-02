@@ -83,10 +83,9 @@
 
 <div class="modal">
 	<div class="modal-box relative">
-		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2" >✕</label
+		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
 		>
 		<form on:submit|preventDefault={handleSubmit} method="post">
-			<h1>{id}</h1>
 			<h1 class="title">Book Medical Appointment</h1>
 			<div class="form-control">
 				<label class="label" for="date">Fecha:</label>

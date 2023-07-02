@@ -31,9 +31,6 @@
 
 <div class="container mx-auto">
 	<Carousel />
-	{#if $menuOpen}
-		<SideMenu />
-	{/if}
 	<div class="grid md:grid-cols-3 gap-3 p-20">
 		{#each specialities as { Speciality, Description, Path }, index}
 			<div
@@ -58,8 +55,5 @@
 				</div>
 			</div>
 		{/each}
-
-		<!-- Put this part before </body> tag -->
-		<Register />
 	</div>
 </div>
