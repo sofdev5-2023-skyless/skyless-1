@@ -1,10 +1,6 @@
 <script lang="ts">
-	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
-	import { updateReminders } from '$lib/ts/useUpdateReminder';
 	import type { doctor_schedule } from '@prisma/client';
 	import type { Reminder } from '$lib/types/reminder';
-	import { ZodError } from 'zod';
-	import { editAppointment, createAppoinment } from '$lib/ts/useReminderForm';
 
 	export let id = '';
 	let isBadDescription: boolean = false;

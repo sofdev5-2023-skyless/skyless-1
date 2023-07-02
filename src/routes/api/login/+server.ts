@@ -4,7 +4,6 @@ import type { RequestEvent, RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 	const { user, password }: User = await request.json();
-	// console.log(user, password);
 
 	const resp = await fetch('http://0.0.0.0:8080/realms/test/protocol/openid-connect/token', {
 		method: 'POST',

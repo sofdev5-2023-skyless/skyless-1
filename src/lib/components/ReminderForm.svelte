@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { appointmentSchema } from '$lib/schemas/appointmentSchema';
 	import { updateReminders } from '$lib/ts/useUpdateReminder';
-	import { loadDoctor, loadSchedule } from '$lib/ts/useLoadData';
+	import { loadSchedule } from '$lib/ts/useLoadData';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
 	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
@@ -44,7 +44,6 @@
 				appointmentForm.id_appointment = parseInt(id);
 				const appointment: Reminder = appointmentSchema.parse(appointmentForm);
 				isVisible = await editAppointment(isVisible, appointment, appointmentForm);
-				console.log(isVisible);
 				isVisibleEditForm.set(false);
 				await updateReminders(appointment.id_user);
 				await updateDoctorSchedule(appointment.hour);

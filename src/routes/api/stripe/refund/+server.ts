@@ -14,7 +14,5 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 		payment_intent: payment_intent
 	});
 
-	console.log(refund);
-
 	return json(refund);
 };

@@ -47,7 +47,6 @@
 	  	});
 
 		if (ok) {
-			console.log(message);
 			return clientSecret;
 		}
 	}
@@ -70,7 +69,7 @@
 
 			await createAppoinment(true, appointmentForm, appointmentForm);
 			await updateDoctorSchedule($appointment.hour, true);
-			console.log(result);
+			
 			goto(`/patient/${patientId}/reminder`);
 		} catch (error) {
 			existError = true;
