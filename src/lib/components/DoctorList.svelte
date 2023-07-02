@@ -25,31 +25,29 @@
 		<input type="checkbox" bind:checked={isOpen} />
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div class="collapse-title text-xl font-medium" on:click={changeState}>
-			<h1 class="text-4xl font-bold">{specialityName}</h1>
+			<h1 class="text-2xl font-bold">{specialityName}</h1>
 		</div>
 		<div class="collapse-content">
 			<!-- <DoctorCard /> -->
 			{#if actualIsSearch}
-				{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
-					<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
-					<div class="flex flex-col w-full">
-						<div class="divider" />
-					</div>
-				{/each}
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
+					{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
+						<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
+					{/each}
+				</div>
 			{:else}
 				{#await loadDoctors()}
 					<div class="container">
 						<div class="grid h-20 card bg-base-300 rounded-box place-items-center">
-							Loading Doctors...
+							<span class="loading loading-bars"></span>
 						</div>
 					</div>
 				{:then doctors}
-					{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
-						<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
-						<div class="flex flex-col w-full">
-							<div class="divider" />
-						</div>
-					{/each}
+					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
+						{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
+							<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
+						{/each}
+					</div>
 				{/await}
 			{/if}
 		</div>

@@ -21,10 +21,10 @@
 	});
 </script>
 
-<div class="container mx-auto">
+<div class="container mx-auto items-center justify-center">
 	<Searcher />
 
-	<div class="flex flex-col min-h-screen pb-10">
+	<div class="flex flex-col pb-10">
 		{#if !actualIsSearch}
 			{#each specilities as { id, name } (id)}
 				<DoctorList
