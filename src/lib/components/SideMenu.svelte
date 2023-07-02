@@ -34,7 +34,7 @@
 			</li>
 			{#if !$areYouDoctor}
 				<li>
-					<label for="doctor" class="btn btn-primary">Are you a doctor?</label>
+					<label for="doctor" class="font-bold"><span class="btn btn-primary">Are you a doctor?</span></label>
 				</li>
 			{/if}
 		</ul>

@@ -69,7 +69,7 @@
 
 			await createAppoinment(true, appointmentForm, appointmentForm);
 			await updateDoctorSchedule($appointment.hour, true);
-			
+
 			goto(`/patient/${patientId}/reminder`);
 		} catch (error) {
 			existError = true;
@@ -80,41 +80,36 @@
 	};
 </script>
 
-<p class="mt-10 card-title">Payment details</p>
-<div class="mt-5 container justify-center items-center" style="text-align: center;">
-	{#if stripe}
-		<Elements {stripe}>
-			<form on:submit|preventDefault={submit}>
-				<div
-					class="mt-2 input input-bordered input-primary w-full max-w-xs"
-					style="margin-left: 30%;"
-				>
-					<CardNumber bind:element={cardElement} classes={{ base: 'input' }} wrapperClass="mt-3" />
-				</div>
-
-				<div class="row">
-					<div
-						class="mt-2 input input-bordered input-primary w-full max-w-xs"
-						style="margin-left: 30%;"
-					>
-						<CardExpiry classes={{ base: 'input' }} wrapperClass="mt-3" />
-					</div>
-					<div
-						class="mt-2 input input-bordered input-primary w-full max-w-xs"
-						style="margin-left: 30%;"
-					>
-						<CardCvc classes={{ base: 'input' }} wrapperClass="mt-3" />
-					</div>
-				</div>
-				{#if existError}
-					<p class="text-red-500">{message}</p>
-				{/if}
-
-				<button class="btn btn-primary mt-2">
-					<span class:loading={processing} class:loading-xs={processing} />
-					Pay Appointment
-				</button>
-			</form>
-		</Elements>
-	{/if}
+<div class="card w-96 bg-base-100 shadow-xl">
+	<div class="card-body">
+		<p class="card-title">Payment details</p>
+		<div class="">
+			{#if stripe}
+				<Elements {stripe}>
+					<form on:submit|preventDefault={submit}>
+						<div class="mt-2 input input-bordered input-primary">
+							<CardNumber
+								bind:element={cardElement}
+								classes={{ base: 'input' }}
+								wrapperClass="mt-3"
+							/>
+						</div>
+						<div class="mt-2 input input-bordered input-primary ">
+							<CardExpiry classes={{ base: 'input' }} wrapperClass="mt-3" />
+						</div>
+						<div class="mt-2 input input-bordered input-primary ">
+							<CardCvc classes={{ base: 'input' }} wrapperClass="mt-3" />
+						</div>
+						{#if existError}
+							<p class="text-red-500">{message}</p>
+						{/if}
+						<button class="btn btn-primary mt-2">
+							<span class:loading={processing} class:loading-xs={processing} />
+							Pay Appointment
+						</button>
+					</form>
+				</Elements>
+			{/if}
+		</div>
+	</div>
 </div>

@@ -19,17 +19,17 @@
 			<a class="justify-between" href="/doctor-list"> View all doctors </a>
 		</li>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-		<li tabindex="0">
-			<a href="/about-us" class="justify-between"> About us </a>
-		</li>
-		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		{#if $menuOpen}
 			<li tabindex="0">
 				<div class="drawer-content">
 					<!-- Page content here -->
-					<label for="my-drawer" class="drawer-button">Open drawer</label>
+					<label for="my-drawer" class="drawer-button">See more options</label>
 				</div>
 			</li>
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+		<li tabindex="0">
+			<a href="/about-us" class="justify-between"> About us </a>
+		</li>
 		{/if}
 	</ul>
 </div>

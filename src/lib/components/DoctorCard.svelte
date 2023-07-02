@@ -9,7 +9,7 @@
 	export let cellphone: string = '000000000';
 </script>
 
-<div class="card lg:card-side bg-base-100 shadow-xl mb-4">
+<div class="card bg-base-100 shadow-xl">
 	<figure>
 		<div class="avatar">
 			<div class="w-24 rounded">
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 	</figure>
-	<div class="card-body">
+	<div class="card-body items-center text-center">
 		<h2 class="card-title">{name} {lastName}</h2>
 		<p>
 			<b>Specialities:</b>

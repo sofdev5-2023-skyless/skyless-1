@@ -2,15 +2,19 @@
 	import { updateSchedules } from '$lib/stores/store';
 	import { loadDoctorSchedules } from '$lib/ts/useLoadData';
 	import axios from 'axios';
+	import toast from 'svelte-french-toast';
 
 	export let id_doctor: string = '';
 
 	const handleDelete = async (id: number) => {
-		const { data, status } = await axios.post('/api/doctor_schedule/delete', {
+		const { data } = await axios.post('/api/doctor_schedule/delete', {
 			id
 		});
 		if (data.ok === 200) {
+			toast.success('A schedule has been deleted');
 			updateSchedules.set(!$updateSchedules);
+		} else {
+			toast.error('This schedule has been reserved');
 		}
 	};
 </script>
@@ -28,7 +32,7 @@
 				<h1 class="text-xl">You do not have scheudules</h1>
 			{:else}
 				<div class="overflow-x-auto">
-					<table class="table table-zebra text-center items-center justify-center">
+					<table class="table-lg mx-auto table-zebra">
 						<!-- head -->
 						<thead>
 							<tr>

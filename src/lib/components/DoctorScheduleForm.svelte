@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { updateSchedules } from '$lib/stores/store';
 	import { loadDoctorSchedules, loadSchedules } from '$lib/ts/useLoadData';
-	import type { doctor_schedule, schedule } from '@prisma/client';
+	import type { schedule } from '@prisma/client';
 	import axios from 'axios';
-	import { onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 
 	export let id_doctor: string = '';
 	let scheduleSelected = '';
@@ -28,6 +28,7 @@
 			schedule: scheduleSelected
 		});
 		if (data.ok == 200) {
+			toast.success('New schedule added');
 			updateSchedules.set(!$updateSchedules);
 		}
 		processing = false;

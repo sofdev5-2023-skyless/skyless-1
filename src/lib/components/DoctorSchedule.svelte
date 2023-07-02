@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Registry from '$lib/ts/registry';
 	import DoctorScheduleForm from './DoctorScheduleForm.svelte';
 	import DoctorScheduleList from './DoctorScheduleList.svelte';
+	import { Toaster } from 'svelte-french-toast';
 
 	let id_doctor = '';
 	if (browser) {
@@ -10,6 +10,7 @@
 	}
 </script>
 
+<Toaster />
 <div class="container mx-auto text-center">
 	<DoctorScheduleForm {id_doctor} />
 	<DoctorScheduleList {id_doctor} />

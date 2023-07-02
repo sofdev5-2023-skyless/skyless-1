@@ -3,13 +3,7 @@
 	import PaymentDescription from '$lib/components/PaymentDescription.svelte';
 </script>
 
-<div class="container mx-auto mb-72">
-	<div class="grid-cols-2 mt-20 flex justify-center items-center">
-		<div class="grid flex-grow place-items-center">
-			<Payment />
-		</div>
-		<div class="grid flex-grow place-items-center">
-			<PaymentDescription />
-		</div>
-	</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-20 mx-auto pb-72 justify-center items-center">
+	<Payment />
+	<PaymentDescription />
 </div>
