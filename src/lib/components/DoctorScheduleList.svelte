@@ -32,7 +32,7 @@
 				<h1 class="text-xl">You do not have scheudules</h1>
 			{:else}
 				<div class="overflow-x-auto">
-					<table class="table-lg mx-auto table-zebra text-center items-center justify-center">
+					<table class="table-lg mx-auto table-zebra">
 						<!-- head -->
 						<thead>
 							<tr>
