@@ -34,7 +34,6 @@ export const handlers = [
 	}),
 
 	rest.get('/api/doctor_schedule/read', (req, res, ctx) => {
-		const id: number = Number(req.url.searchParams.get('id')) ?? 0;
 		return res(ctx.status(200), ctx.json(schedule));
 	}),
 

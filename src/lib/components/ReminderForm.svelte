@@ -4,7 +4,7 @@
 	import { loadSchedule } from '$lib/ts/useLoadData';
 	import type { Reminder } from '$lib/types/reminder';
 	import { ZodError } from 'zod';
-	import { editAppointment, createAppoinment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
+	import { editAppointment, updateDoctorSchedule } from '$lib/ts/useReminderForm';
 	import { parseDate } from '$lib/ts/parseDate';
 	import type { doctor_schedule } from '@prisma/client';
 	import ErrorZod from './ErrorZod.svelte';
@@ -72,7 +72,7 @@
 	};
 
 	const loadSchedules = async () => {
-		const { data, status } = await axios(
+		const { data } = await axios(
 			`/api/doctor_schedule/read-doctor?id=${isEdit ? appointmentForm.id_doctor : id}`
 		);
 		const schedules: doctor_schedule[] = await data;

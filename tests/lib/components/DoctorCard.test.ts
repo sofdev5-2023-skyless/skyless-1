@@ -60,6 +60,7 @@ describe('DoctorCard component', () => {
 	it('should render the correct title', () => {
 		const { getByText } = render(DoctorCard, {
 			props: {
+				id: '1',
 				name: 'John',
 				lastName: 'Doe'
 			}
@@ -70,6 +71,7 @@ describe('DoctorCard component', () => {
 	it('should render the updated name and last name when props are changed', () => {
 		const { getByText, rerender } = render(DoctorCard, {
 			props: {
+				id: '1',
 				name: 'Jane',
 				lastName: 'Smith'
 			}
@@ -79,6 +81,7 @@ describe('DoctorCard component', () => {
 
 		rerender({
 			props: {
+				id: '1',
 				name: 'Mark',
 				lastName: 'Johnson'
 			}
@@ -95,15 +98,17 @@ describe('DoctorCard component', () => {
 	it('should render the correct link with different valid `cellphone` values', () => {
 		const { getByText } = render(DoctorCard, {
 			props: {
+				id: '1',
 				cellphone: '111-222-3333'
 			}
 		});
 		expect(getByText('111-222-3333')).toBeTruthy();
 	});
-	
+
 	it('should render the correct link', () => {
 		const { getByText, getByTestId } = render(DoctorCard, {
 			props: {
+				id: '1',
 				cellphone: '123-456-7890'
 			}
 		});
@@ -177,8 +182,9 @@ describe('DoctorCard component', () => {
 	});
 
 	it('should render the correct link', () => {
-		const { getByText } = render(DoctorCard);
-
+		const { getByText } = render(DoctorCard, {
+			id: '1'
+		});
 		expect(getByText('More information')).toBeTruthy();
 	});
 });
