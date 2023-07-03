@@ -28,7 +28,6 @@
 	const { doctor, errors, messages, cleanAll, cleanError, cleanMessage } = useRegisterForm();
 
 	const handleSubmit = async () => {
-
 		if (doctorCode === 1234) {
 			const { id, firstName, lastName, email } = await loadPatient(key);
 
@@ -57,8 +56,6 @@
 				cleanError(errors);
 				cleanMessage(messages);
 				if (error instanceof ZodError) {
-					console.log('🚀 ~ file: Register.svelte:70 ~ handleSubmit ~ error:', error);
-
 					error.issues.forEach((err) => {
 						errors[err.path[0] as keyof typeof errors] = true;
 						messages[err.path[0] as keyof typeof messages] = err.message;
@@ -75,9 +72,7 @@
 		const js = await resp.json();
 		specialities = js;
 
-		return () => {
-			console.log('unmounted');
-		};
+		return () => {};
 	});
 </script>
 

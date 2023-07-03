@@ -20,7 +20,7 @@
 </script>
 
 <div class="container mx-auto items-center justify-center text-center p-5">
-	<h2 class="text-2xl font-bold">Your schedules</h2>
+	<h2 class="text-2xl font-bold animate__animated animate__fadeIn">Your schedules</h2>
 
 	{#key $updateSchedules}
 		{#await loadDoctorSchedules(id_doctor)}
@@ -42,7 +42,7 @@
 						</thead>
 						<tbody>
 							{#each schedules as { id, schedule } (id)}
-								<tr>
+								<tr class="hover animate__animated animate__fadeIn">
 									<td>{schedule}</td>
 									<button class="btn btn-error" on:click={() => handleDelete(id)}>Delete</button>
 								</tr>

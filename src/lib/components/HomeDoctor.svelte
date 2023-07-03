@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 	import Carousel from './Carousel.svelte';
 	import { areYouDoctor, masterKey } from '$lib/stores/store';
-	import ReminderTable from './DoctorReminderTable.svelte';
 	import { goto } from '$app/navigation';
 	import DoctorSchedule from './DoctorSchedule.svelte';
+	import DoctorReminderTable from './DoctorReminderTable.svelte';
 	let isFormVisible = false;
 
 	function toggleForm() {
@@ -27,7 +27,7 @@
 	<DoctorSchedule />
 	<div class="p-1">
 		<div class="">
-			<ReminderTable />
+			<DoctorReminderTable />
 		</div>
 	</div>
 </div>

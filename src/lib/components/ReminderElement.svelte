@@ -71,8 +71,8 @@
 
 	async function verifyIsAlreadyStarted() {
 		const formatedHour = await loadSchedule(hour);
-		const appointmentHour = formatedHour.schedule.slice(0,2);
-		
+		const appointmentHour = formatedHour.schedule.slice(0, 2);
+
 		if (currentDate >= new Date(date) && currentHour >= parseInt(appointmentHour)) {
 			isAlreadyStarted = true;
 		} else {
@@ -97,7 +97,7 @@
 	}
 </script>
 
-<tr class="hover" class:line-through={isDone}>
+<tr class="hover animate__animated animate__fadeIn" class:line-through={isDone}>
 	<th>
 		<label>
 			<input

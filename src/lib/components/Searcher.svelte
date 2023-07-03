@@ -3,6 +3,7 @@
 	import SearchIcon from '../../icons/SearchIcon.svelte';
 	import DoctorList from '$lib/components/DoctorList.svelte';
 	import { isSearch } from '$lib/stores/store';
+	import 'animate.css';
 
 	let nameDoctor = '';
 	let doctors: Doctor[] = [];
@@ -21,7 +22,7 @@
 	};
 </script>
 
-<div class="pt-20">
+<div class="pt-20 animate__animated animate__fadeIn">
 	<form>
 		<label
 			for="default-search"

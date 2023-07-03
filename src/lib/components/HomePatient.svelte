@@ -9,10 +9,7 @@
 	import traumatologia from '$lib/images/especialidades/traumatologia.png';
 	import otorrinolaringologia from '$lib/images/especialidades/otorrinolaringologia.png';
 	import cirugiaplastica from '$lib/images/especialidades/cirugiaplastica.png';
-	import SideMenu from '$lib/components/SideMenu.svelte';
-	import { menuOpen } from '$lib/stores/store';
 	import specialities from '$lib/data/specialities.json';
-	import Register from './Register.svelte';
 
 	import Carousel from './Carousel.svelte';
 
@@ -31,23 +28,29 @@
 
 <div class="container mx-auto">
 	<Carousel />
-	<div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-20">
+	<div
+		class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-20 animate__animated animate__fadeIn"
+	>
 		{#each specialities as { Speciality, Description, Path }, index}
 			<div
 				aria-posinset={index + 1}
 				aria-setsize={specialities.length}
 				class="flex flex-col justify-center items-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+				data-aos="fade-up"
 			>
+				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a href="#">
 					<img class="h-auto max-w-full rounded-lg" src={items[index]} alt={Path} />
 				</a>
 				<div class="p-5">
+					<!-- svelte-ignore a11y-invalid-attribute -->
 					<a href="#">
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 							{Speciality}
 						</h5>
 					</a>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{Description}</p>
+					<!-- svelte-ignore a11y-invalid-attribute -->
 					<a href="#" class="btn btn-primary">
 						See more
 						<ArrowStick />

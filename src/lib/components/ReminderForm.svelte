@@ -11,6 +11,7 @@
 	import { goto } from '$app/navigation';
 	import { appointment, isVisibleEditForm } from '$lib/stores/store';
 	import axios from 'axios';
+	import { onMount } from 'svelte';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -78,11 +79,24 @@
 		const schedules: doctor_schedule[] = await data;
 		return schedules;
 	};
+
+	const handleEsc = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			isVisible = false;
+		}
+	};
+
+	onMount(() => {
+		window.addEventListener('keydown', handleEsc);
+		return () => {
+			window.removeEventListener('keydown', handleEsc);
+		};
+	});
 </script>
 
 <input type="checkbox" id={`my-modal-${id}`} class="modal-toggle" bind:checked={isVisible} />
 
-<div class="modal">
+<div class="modal z-50">
 	<div class="modal-box relative">
 		<label for={`my-modal-${id}`} class="btn btn-primary btn-circle absolute right-2 top-2">✕</label
 		>

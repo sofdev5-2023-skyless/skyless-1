@@ -9,7 +9,7 @@
 	import MedicalCheckLogo from '$lib/images/MedicalCheckLogo.png';
 </script>
 
-<footer class="footer p-10 bg-base-300 text-base-content mx-auto">
+<footer class="footer p-10 bg-base-300 text-base-content mx-auto animate__animated animate__fadeIn">
 	<div>
 		<img src={MedicalCheckLogo} alt="logo footer" width="200px" />
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400 pt-5"

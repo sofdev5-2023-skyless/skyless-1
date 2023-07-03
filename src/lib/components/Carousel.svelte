@@ -2,7 +2,7 @@
 	import { images } from '$lib/utility/carouselData';
 </script>
 
-<div class="carousel" data-testid="carousel">
+<div class="carousel animate__animated animate__fadeIn" data-testid="carousel">
 	{#each images as { id, imgurl, name } (id)}
 		<div id={`slide${id}`} class="carousel-item relative w-full">
 			<img src={imgurl} class="w-full" alt={name} />

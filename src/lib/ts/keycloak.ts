@@ -39,11 +39,9 @@ export class Auth {
 
 	async tryLogout(): Promise<void> {
 		let data = this.client.createLogoutUrl();
-		console.log(data);
 	}
 
 	logout(): void {
-		console.log(this.client.subject);
 		this.tryLogout();
 	}
 

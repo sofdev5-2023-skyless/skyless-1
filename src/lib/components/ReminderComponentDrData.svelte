@@ -55,7 +55,7 @@
 	}
 
 	const loadSchedule = async (hour: number) => {
-		const {data, status} = await axios.get(`/api/doctor_schedule/read?id=${hour}`);
+		const { data, status } = await axios.get(`/api/doctor_schedule/read?id=${hour}`);
 		return data;
 	};
 
@@ -68,7 +68,6 @@
 		const dueDate =
 			new Date(date).getTime() <= new Date().getTime() &&
 			!(startHour <= currentHour && currentHour <= endHour);
-		console.log(dueDate);
 		isDueDateFl = dueDate;
 		return dueDate;
 	}
@@ -80,7 +79,7 @@
 	}
 </script>
 
-<tr class="hover" class:line-through={isDone}>
+<tr class="hover animate__animated animate__fadeIn" class:line-through={isDone}>
 	<td>
 		<div class="flex items-center space-x-3">
 			<div class="avatar">

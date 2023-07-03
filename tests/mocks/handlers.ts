@@ -33,12 +33,11 @@ const appointment: Reminder = {
 
 const patient: Client = {
 	email: 'test1@gmail.com',
-	firstName: "Patient",
-	lastName: "First",
-	username: "user",
+	firstName: 'Patient',
+	lastName: 'First',
+	username: 'user',
 	id: 'Test002'
 };
-
 
 const reminders: Reminder[] = [];
 
