@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { doctor_schedule } from '@prisma/client';
 	import type { Reminder } from '$lib/types/reminder';
+	import axios from 'axios';
+	import { PAPERSIZE } from '$env/static/private';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -20,8 +22,8 @@
 	};
 
 	const loadSchedule = async (hour: number) => {
-		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
-		const result: doctor_schedule = await resp.json();
+		const { data, status } = await axios(`/api/doctor_schedule/read?id=${hour}`);
+		const result: doctor_schedule = data;
 		schduleLabel = result.schedule;
 		return result;
 	};
@@ -43,6 +45,8 @@
 			<div class="form-control">
 				{#await loadSchedule(appointmentForm.hour)}
 					Loading...
+				{:catch error}
+					<p>{error}</p>
 				{/await}
 				<label class="label" for="hour">Hour: {schduleLabel}</label>
 			</div>

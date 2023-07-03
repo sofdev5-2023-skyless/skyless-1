@@ -1,4 +1,4 @@
-import { render } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import Carousel from '../../../src/lib/components/Carousel.svelte';
 
 describe('Carousel', () => {
@@ -9,16 +9,17 @@ describe('Carousel', () => {
 	});
 
 	it('should render one image per slide', () => {
-		const { container } = render(Carousel);
-		const images = container.querySelectorAll('img');
-		expect(images.length).toBe(1);
+		render(Carousel);
+		const images = screen.getAllByRole('img');
+		expect(images.length).toBe(10);
 	});
-	it('should render navigational buttons', () => {
-		const { getByRole } = render(Carousel);
-		const prevButton = getByRole('button', { name: /Previous/i });
-		const nextButton = getByRole('button', { name: /Next/i });
 
-		expect(prevButton).toBeInTheDocument();
-		expect(nextButton).toBeInTheDocument();
+	it('should render navigational buttons', () => {
+		render(Carousel);
+		const prevButton = screen.getAllByRole('link', { name: /❮/ });
+		const nextButton = screen.getAllByRole('link', { name: /❯/ });
+
+		expect(prevButton.length).toBe(10);
+		expect(nextButton.length).toBe(10);
 	});
 });

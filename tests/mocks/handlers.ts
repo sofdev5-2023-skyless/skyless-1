@@ -30,17 +30,11 @@ export const handlers = [
 
 	rest.get('/api/doctors/read', (req, res, ctx) => {
 		const id: number = Number(req.url.searchParams.get('id')) ?? 0;
-		if (id == 0) {
-			return res(ctx.status(400), ctx.json({ ok: 400 }));
-		}
 		return res(ctx.status(200), ctx.json(doctor));
 	}),
 
 	rest.get('/api/doctor_schedule/read', (req, res, ctx) => {
 		const id: number = Number(req.url.searchParams.get('id')) ?? 0;
-		if (id == 0) {
-			return res(ctx.status(400), ctx.json({ ok: 400 }));
-		}
 		return res(ctx.status(200), ctx.json(schedule));
 	}),
 
