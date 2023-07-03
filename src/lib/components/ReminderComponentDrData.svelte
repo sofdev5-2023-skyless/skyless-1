@@ -55,9 +55,8 @@
 	}
 
 	const loadSchedule = async (hour: number) => {
-		const resp = await fetch(`/api/doctor_schedule/read?id=${hour}`);
-		const result: doctor_schedule = await resp.json();
-		return result;
+		const {data, status} = await axios.get(`/api/doctor_schedule/read?id=${hour}`);
+		return data;
 	};
 
 	function isPastHour(hour: string, date: string) {
