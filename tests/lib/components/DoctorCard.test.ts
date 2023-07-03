@@ -12,6 +12,19 @@ describe('DoctorCard component', () => {
 		};
 
 		const { getByText } = render(DoctorCard, props);
+		expect(getByText('John Doe')).toBeInTheDocument();
+	});
+
+	it('renders the doctor speciality correctly', () => {
+		const props = {
+			id: '1',
+			name: 'John',
+			lastName: 'Doe',
+			speciality: 'Cardiology',
+			cellphone: '123456789'
+		};
+
+		const { getByText } = render(DoctorCard, props);
 		expect(getByText('Cardiology')).toBeInTheDocument();
 	});
 
@@ -109,15 +122,6 @@ describe('DoctorCard component', () => {
 		const { getByText, getByTestId } = render(DoctorCard, {
 			props: {
 				id: '1',
-				cellphone: '123-456-7890'
-			}
-		});
-		expect(getByText('123-456-7890')).toBeTruthy();
-	});
-
-	it('should render the correct link', () => {
-		const { getByText, getByTestId } = render(DoctorCard, {
-			props: {
 				cellphone: '123-456-7890'
 			}
 		});

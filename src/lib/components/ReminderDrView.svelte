@@ -2,7 +2,6 @@
 	import type { doctor_schedule } from '@prisma/client';
 	import type { Reminder } from '$lib/types/reminder';
 	import axios from 'axios';
-	import { PAPERSIZE } from '$env/static/private';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
