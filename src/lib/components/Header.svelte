@@ -71,17 +71,6 @@
 			<li>
 				<a href="/about-us">About us </a>
 			</li>
-			{#if $menuOpen}
-				<li>
-					<div class="drawer-content">
-						<!-- Page content here -->
-						<label for="my-drawer" class="drawer-button">See more options</label>
-					</div>
-				</li>
-			{/if}
-			<li>
-				<a href="/about-us">About us </a>
-			</li>
 		</ul>
 	</div>
 	<div class="navbar-end">
