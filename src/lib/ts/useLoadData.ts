@@ -37,3 +37,8 @@ export const loadSchedules = async (): Promise<schedule[]> => {
 	const { data, status } = await axios<schedule[]>('/api/schedule');
 	return data;
 };
+
+export const loadDoctorsBySpeciality = async (id: string): Promise<Doctor[]> => {
+	const { data, status } = await axios(`/api/doctors/speciality?id=${id}`);
+	return data;
+};

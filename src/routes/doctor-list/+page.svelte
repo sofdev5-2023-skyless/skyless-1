@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import Searcher from '$lib/components/Searcher.svelte';
 	import { isSearch } from '$lib/stores/store';
+	import { loadDoctorsBySpeciality } from '$lib/ts/useLoadData';
+	import ReminderForm from '$lib/components/ReminderForm.svelte';
 
 	let specilities: Speciality[] = [];
 	let actualIsSearch: boolean;
@@ -30,6 +32,11 @@
 					specialityName={name}
 					specialityPath={`/api/doctors/speciality?id=${id}`}
 				/>
+				{#await loadDoctorsBySpeciality(id) then doctors}
+					{#each doctors as { id } (id)}
+						<ReminderForm {id} />
+					{/each}
+				{/await}
 			{/each}
 		{/if}
 	</div>
