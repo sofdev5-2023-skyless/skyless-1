@@ -1,5 +1,6 @@
 import type { Doctor } from '$lib/types/doctor';
 import type { Reminder } from '$lib/types/reminder';
+import type { Client } from '$lib/types/client';
 import type { doctor_schedule } from '@prisma/client';
 import { rest } from 'msw';
 
@@ -20,6 +21,24 @@ const schedule: doctor_schedule = {
 	occupied: false,
 	schedule: 'Doctor Schedule'
 };
+
+const appointment: Reminder = {
+	id_appointment: 5,
+	date: '',
+	hour: 2,
+	description: 'test',
+	id_doctor: 'Test001',
+	id_user: 'Test002'
+};
+
+const patient: Client = {
+	email: 'test1@gmail.com',
+	firstName: "Patient",
+	lastName: "First",
+	username: "user",
+	id: 'Test002'
+};
+
 
 const reminders: Reminder[] = [];
 
