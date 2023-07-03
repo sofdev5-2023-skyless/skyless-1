@@ -10,6 +10,7 @@
 	import ErrorZod from './ErrorZod.svelte';
 	import { goto } from '$app/navigation';
 	import { appointment, isVisibleEditForm } from '$lib/stores/store';
+	import axios from 'axios';
 
 	export let id = '';
 	let isBadDescription: boolean = false;
@@ -71,10 +72,10 @@
 	};
 
 	const loadSchedules = async () => {
-		const resp = await fetch(
+		const { data, status } = await axios(
 			`/api/doctor_schedule/read-doctor?id=${isEdit ? appointmentForm.id_doctor : id}`
 		);
-		const schedules: doctor_schedule[] = await resp.json();
+		const schedules: doctor_schedule[] = await data;
 		return schedules;
 	};
 </script>

@@ -25,7 +25,6 @@ describe('Test to prove API', () => {
 		const button = screen.getByRole('button', { name: '' });
 
 		await fireEvent.click(button);
-		expect(screen.getByText('The appointment cannot be canceled once started')).toBeDefined();
-		screen.debug();
+		expect(screen.getByText('Are you sure you want to cancel this appointment?')).toBeDefined();
 	});
 });
