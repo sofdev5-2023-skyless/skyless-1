@@ -19,8 +19,6 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 		}
 	});
 
-	console.log('logout server: ', resp.status);
-
 	if (resp.status == 204) {
 		return json({ ok: resp.status });
 	}

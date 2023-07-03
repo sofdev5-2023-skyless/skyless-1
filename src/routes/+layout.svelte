@@ -7,6 +7,14 @@
 	import { menuOpen } from '$lib/stores/store';
 	import SideMenu from '$lib/components/SideMenu.svelte';
 	import Register from '$lib/components/Register.svelte';
+	import 'animate.css';
+	import AOS from 'aos';
+	import 'aos/dist/aos.css';
+	import { browser } from '$app/environment';
+
+	if (browser) {
+		AOS.init();
+	}
 
 	onMount(async () => {
 		const key = localStorage.getItem('key');

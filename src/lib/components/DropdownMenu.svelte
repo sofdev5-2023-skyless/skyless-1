@@ -26,10 +26,10 @@
 					<label for="my-drawer" class="drawer-button">See more options</label>
 				</div>
 			</li>
-		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-		<li tabindex="0">
-			<a href="/about-us" class="justify-between"> About us </a>
-		</li>
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<li tabindex="0">
+				<a href="/about-us" class="justify-between"> About us </a>
+			</li>
 		{/if}
 	</ul>
 </div>

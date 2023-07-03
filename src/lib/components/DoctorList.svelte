@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div class="container mx-auto pt-16">
+<div class="container mx-auto pt-16" data-aos="fade-up">
 	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 	<div class="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow">
 		<input type="checkbox" bind:checked={isOpen} />
@@ -39,11 +39,13 @@
 				{#await loadDoctors()}
 					<div class="container">
 						<div class="grid h-20 card bg-base-300 rounded-box place-items-center">
-							<span class="loading loading-bars"></span>
+							<span class="loading loading-bars" />
 						</div>
 					</div>
 				{:then doctors}
-					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
+					<div
+						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto animate__animated animate__fadeIn"
+					>
 						{#each doctors as { id, name, lastName, cellphone, speciality } (id)}
 							<DoctorCard {name} {lastName} {cellphone} {speciality} {id} />
 						{/each}

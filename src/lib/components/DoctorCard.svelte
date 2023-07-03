@@ -12,7 +12,7 @@
 <div class="card bg-base-100 shadow-xl">
 	<figure>
 		<div class="avatar">
-			<div class="w-24 rounded">
+			<div class="w-24 rounded-full">
 				<img src="./src/lib/images/default.png" alt="default" />
 			</div>
 		</div>

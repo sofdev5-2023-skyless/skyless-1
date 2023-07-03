@@ -93,10 +93,10 @@
 								wrapperClass="mt-3"
 							/>
 						</div>
-						<div class="mt-2 input input-bordered input-primary ">
+						<div class="mt-2 input input-bordered input-primary">
 							<CardExpiry classes={{ base: 'input' }} wrapperClass="mt-3" />
 						</div>
-						<div class="mt-2 input input-bordered input-primary ">
+						<div class="mt-2 input input-bordered input-primary">
 							<CardCvc classes={{ base: 'input' }} wrapperClass="mt-3" />
 						</div>
 						{#if existError}

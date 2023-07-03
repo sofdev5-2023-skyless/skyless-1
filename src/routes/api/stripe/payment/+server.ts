@@ -22,7 +22,6 @@ const createPayment = async (name: string, amount: number = 50) => {
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
 	const { name } = await request.json();
-	console.log('🚀 ~ file: +server.ts:27 ~ constPOST:RequestHandler= ~ name:', name);
 	const result = await createPayment(name);
 	return json(result);
 };

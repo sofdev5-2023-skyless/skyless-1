@@ -31,12 +31,15 @@
 
 <div class="container mx-auto">
 	<Carousel />
-	<div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-20">
+	<div
+		class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-20 animate__animated animate__fadeIn"
+	>
 		{#each specialities as { Speciality, Description, Path }, index}
 			<div
 				aria-posinset={index + 1}
 				aria-setsize={specialities.length}
 				class="flex flex-col justify-center items-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+				data-aos="fade-up"
 			>
 				<a href="#">
 					<img class="h-auto max-w-full rounded-lg" src={items[index]} alt={Path} />

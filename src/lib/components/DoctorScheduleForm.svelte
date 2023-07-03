@@ -35,7 +35,7 @@
 	};
 </script>
 
-<div class="items-center justify-center p-5 text-center">
+<div class="items-center justify-center p-5 text-center animate__animated animate__fadeIn">
 	<form method="post" on:submit|preventDefault={handleSubmit}>
 		<label for="schedule">Add an schedule available: </label>
 		<select

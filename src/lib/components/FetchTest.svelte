@@ -12,7 +12,6 @@
 	const fetchElem2 = async () => {
 		const resp = await fetch('/api/hello');
 		const result = await resp.json();
-		console.log('🚀 ~ file: FetchTest.svelte:15 ~ fetchElem2 ~ result:', result);
 		return result;
 	};
 </script>
